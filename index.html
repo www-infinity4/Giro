@@ -564,6 +564,208 @@
       min-height: 24px;
       border-radius: 1px;
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       GP SUITE — Extended AI agents
+    ═══════════════════════════════════════════════════════════════ */
+    .gp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .gp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, transform .15s;
+      cursor: default;
+    }
+    .gp-card:hover { border-color: var(--gp-col); transform: translateY(-3px); }
+    .gp-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, var(--gp-col-dim) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .gp-symbol {
+      font-size: 2rem;
+      line-height: 1;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .gp-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--gp-col);
+      margin-bottom: 4px;
+    }
+    .gp-role-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .gp-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .gp-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--gp-col);
+    }
+    .gp-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gp-col);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       QUANTUM RHYTHM ENGINE (QRE) schematic
+    ═══════════════════════════════════════════════════════════════ */
+    #qre-canvas {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 560px;
+      display: block;
+      border-radius: 50%;
+      border: 1px solid rgba(59,130,246,.15);
+      margin: 0 auto;
+    }
+    .qre-components {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .qre-comp {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color .2s;
+    }
+    .qre-comp:hover { border-color: var(--accent); }
+    .qre-comp-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .qre-comp h4 { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+    .qre-comp p  { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       MISSION CONTROL DASHBOARD
+    ═══════════════════════════════════════════════════════════════ */
+    #dashboard {
+      background: #06030f;
+      position: relative;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr 260px;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Agent panel column */
+    .agent-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .agent-tile {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: border-color .2s;
+    }
+    .agent-tile.active  { border-color: var(--at-col); }
+    .agent-tile.standby { opacity: .55; }
+    .agent-tile-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .agent-symbol { font-size: 1.2rem; line-height: 1; }
+    .agent-name   { font-size: .82rem; font-weight: 700; }
+    .agent-state  { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-left: auto; padding: 2px 7px; border-radius: 4px; }
+    .state-active  { background: rgba(16,185,129,.15); color: #6ee7b7; }
+    .state-standby { background: rgba(255,255,255,.06); color: var(--muted); }
+    .state-alert   { background: rgba(239,68,68,.15); color: #fca5a5; animation: blink .9s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .agent-bar-wrap { height: 4px; background: rgba(255,255,255,.07); border-radius: 2px; overflow: hidden; }
+    .agent-bar { height: 100%; border-radius: 2px; transition: width .4s; background: var(--at-col); }
+    .agent-task { font-size: .72rem; color: var(--muted); margin-top: 6px; font-family: monospace; }
+
+    /* Central HUD canvas */
+    #hud-canvas {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius);
+      border: 1px solid rgba(59,130,246,.2);
+      display: block;
+      cursor: pointer;
+    }
+    .hud-below {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .hud-metric {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .hud-metric .hm-val { font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .hud-metric .hm-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+    /* Event log column */
+    .event-log {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      height: 480px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: .72rem;
+    }
+    .event-log-title {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .log-entry {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      line-height: 1.5;
+      border-left: 2px solid transparent;
+      padding-left: 6px;
+    }
+    .log-entry.info    { border-left-color: #3b82f6; color: #93c5fd; }
+    .log-entry.warn    { border-left-color: #ef4444; color: #fca5a5; }
+    .log-entry.success { border-left-color: #10b981; color: #6ee7b7; }
+    .log-ts { opacity: .5; flex-shrink: 0; }
+    .hud-hint { font-size: .75rem; color: var(--muted); text-align: center; margin-top: 6px; }
   </style>
 </head>
 <body>
@@ -1285,6 +1487,277 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════════
+     EXTENDED GP SUITE
+═══════════════════════════════════════════════════════════════════ -->
+<section id="gp-suite">
+  <div class="container">
+    <p class="section-label" style="color:#c4b5fd;">Peripheral Nervous System</p>
+    <h2>The Extended GP Suite</h2>
+    <p class="section-intro">
+      Giro is the central healer, but it does not operate alone.
+      The GP (Git-Protocol) family are specialised AIs that form
+      its peripheral nervous system — each monitoring, smoothing,
+      or enforcing a different layer of the existence repo.
+    </p>
+
+    <!-- Giro itself — the core -->
+    <div class="callout" style="margin-bottom:32px;">
+      <strong style="color:var(--text);">Giro</strong> — the core regulator.
+      It authors the patch and orchestrates every agent below.
+      All signals route through Giro; it holds the master merge key.
+    </div>
+
+    <div class="gp-grid">
+
+      <div class="gp-card" style="--gp-col:#60a5fa;--gp-col-dim:rgba(96,165,250,.06);">
+        <span class="gp-symbol">≋</span>
+        <div class="gp-name">Gitflow</div>
+        <div class="gp-role-tag">The Streamliner</div>
+        <p class="gp-desc">
+          Manages the momentum of the inertia pool during transitions.
+          When a universe is cloned or forked, Gitflow ensures the
+          handoff is smooth — no rhythm shock, no cadence discontinuity.
+        </p>
+        <div class="gp-status"><span class="gp-dot"></span>Smoothing transition…</div>
+      </div>
+
+      <div class="gp-card" style="--gp-col:#f87171;--gp-col-dim:rgba(248,113,113,.06);">
+        <span class="gp-symbol">♥</span>
+        <div class="gp-name">Gitpulse</div>
+        <div class="gp-role-tag">The Diagnostician</div>
+        <p class="gp-desc">
+          Monitors erythmia exclusively. Flags off-beats in the spatial
+          code before they become full-blown glitches — the early-warning
+          system of the GP suite.
+        </p>
+        <div class="gp-status"><span class="gp-dot"></span>Scanning cadence…</div>
+      </div>
+
+      <div class="gp-card" style="--gp-col:#fbbf24;--gp-col-dim:rgba(251,191,36,.06);">
+        <span class="gp-symbol">🏛</span>
+        <div class="gp-name">Gitarch</div>
+        <div class="gp-role-tag">The Architect</div>
+        <p class="gp-desc">
+          The heavy lifter. While Gitpro handles styling, Gitarch
+          rewrites the foundation — the actual physics laws of the
+          cloned world. Reserved for structural patches.
+        </p>
+        <div class="gp-status"><span class="gp-dot"></span>Structural audit…</div>
+      </div>
+
+      <div class="gp-card" style="--gp-col:#34d399;--gp-col-dim:rgba(52,211,153,.06);">
+        <span class="gp-symbol">⟲</span>
+        <div class="gp-name">Gitsync</div>
+        <div class="gp-role-tag">The Harmoniser</div>
+        <p class="gp-desc">
+          Re-integrates patched rhythms back into the main existence.
+          Ensures Giro's healing is not rejected by the original repo —
+          the immune-system mediator of the merge.
+        </p>
+        <div class="gp-status"><span class="gp-dot"></span>Harmonising merge…</div>
+      </div>
+
+      <div class="gp-card" style="--gp-col:#a78bfa;--gp-col-dim:rgba(167,139,250,.06);">
+        <span class="gp-symbol">◈</span>
+        <div class="gp-name">Gitscan</div>
+        <div class="gp-role-tag">The Sentry</div>
+        <p class="gp-desc">
+          Continuously scans the cauldron of everything for <em>external</em>
+          inertia forces. Guards the local spatial pool from cosmic
+          interference that could destabilise the patch.
+        </p>
+        <div class="gp-status"><span class="gp-dot"></span>Perimeter active…</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     QUANTUM RHYTHM ENGINE SCHEMATIC
+═══════════════════════════════════════════════════════════════════ -->
+<section id="qre" style="background:var(--surface);">
+  <div class="container">
+    <p class="section-label" style="color:#fbbf24;">Hardware Schematic</p>
+    <h2>The Quantum Rhythm Engine</h2>
+    <p class="section-intro">
+      If the Giro software ran on dedicated hardware, it would be a
+      <strong style="color:var(--text);">Quantum Rhythm Engine</strong> —
+      a device that doesn't process bits but processes <em>frequencies</em>.
+      At its centre spins the Giro core; around it, four peripheral
+      subsystems manage every layer of the momentum field.
+    </p>
+
+    <div class="two-col" style="gap:56px;">
+      <canvas id="qre-canvas"></canvas>
+      <div class="qre-components">
+        <div class="qre-comp">
+          <span class="qre-comp-icon">🌀</span>
+          <div>
+            <h4>Centrifugal Core</h4>
+            <p>The spinning Giro ring. Generates the "Operational Symptomatic
+               Regulator" field — a standing wave of corrective angular momentum
+               that the other subsystems anchor to.</p>
+          </div>
+        </div>
+        <div class="qre-comp">
+          <span class="qre-comp-icon">△</span>
+          <div>
+            <h4>Vector Triangulation Array (Gitpin ∆)</h4>
+            <p>A ring of triangular sensors that map out the spatial nature of
+               the erythmia. Three sensors fire simultaneously; their phase
+               intersection locates the off-beat node to sub-millimetre accuracy.</p>
+          </div>
+        </div>
+        <div class="qre-comp">
+          <span class="qre-comp-icon">⊟</span>
+          <div>
+            <h4>Inertia Dampeners</h4>
+            <p>External fins tuned to absorb incoming momentum spikes from the
+               cauldron. Keep the pool stable enough for the healer to operate
+               without being knocked off-balance by cosmic turbulence.</p>
+          </div>
+        </div>
+        <div class="qre-comp">
+          <span class="qre-comp-icon">📡</span>
+          <div>
+            <h4>Repo-Link Port (Gitpub 📡)</h4>
+            <p>The live uplink to <code style="background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:.78rem;">universe/main</code>.
+               Broadcasts the corrective patch and receives real-time
+               momentum telemetry. Hot-swappable — never taken offline
+               during an active healing cycle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     MISSION CONTROL DASHBOARD
+═══════════════════════════════════════════════════════════════════ -->
+<section id="mission-control" style="background:#06030f;">
+  <div class="container">
+    <p class="section-label" style="color:#a78bfa;">Mission Control</p>
+    <h2 style="background:linear-gradient(135deg,#fff 20%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+      GP Suite — Live Dashboard
+    </h2>
+    <p class="section-intro" style="margin-bottom:32px;">
+      The full GP suite working in concert.
+      <strong style="color:var(--text);">Click the central HUD</strong>
+      to inject a world-glitch and watch each agent respond in real-time.
+    </p>
+
+    <div class="dashboard-grid">
+
+      <!-- Left: Giro + Gitflow + Gitpulse -->
+      <div class="agent-panel" id="panel-left">
+
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;">CORE &amp; SENSORS</div>
+
+        <div class="agent-tile" id="tile-giro" style="--at-col:#fff;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">🌀</span>
+            <span class="agent-name">Giro</span>
+            <span class="agent-state state-active" id="state-giro">ACTIVE</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-giro" style="width:100%;background:#93c5fd;"></div></div>
+          <div class="agent-task" id="task-giro">Regulator field nominal</div>
+        </div>
+
+        <div class="agent-tile" id="tile-gitpulse" style="--at-col:#f87171;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">♥</span>
+            <span class="agent-name">Gitpulse</span>
+            <span class="agent-state state-active" id="state-gitpulse">WATCH</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-gitpulse" style="width:20%;background:#f87171;"></div></div>
+          <div class="agent-task" id="task-gitpulse">E_idx = 0.03 · nominal</div>
+        </div>
+
+        <div class="agent-tile" id="tile-gitscan" style="--at-col:#a78bfa;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">◈</span>
+            <span class="agent-name">Gitscan</span>
+            <span class="agent-state state-active" id="state-gitscan">PATROL</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-gitscan" style="width:35%;background:#a78bfa;"></div></div>
+          <div class="agent-task" id="task-gitscan">Perimeter clear</div>
+        </div>
+
+      </div>
+
+      <!-- Centre: HUD canvas + metrics -->
+      <div>
+        <canvas id="hud-canvas"></canvas>
+        <p class="hud-hint">Click to inject a world-glitch · GP Suite auto-responds</p>
+        <div class="hud-below">
+          <div class="hud-metric">
+            <div class="hm-val" id="hm-erythmia" style="color:#f87171;">0.03</div>
+            <div class="hm-label">Erythmia idx</div>
+          </div>
+          <div class="hud-metric">
+            <div class="hm-val" id="hm-health" style="color:#34d399;">97%</div>
+            <div class="hm-label">Rhythm health</div>
+          </div>
+          <div class="hud-metric">
+            <div class="hm-val" id="hm-patches" style="color:#60a5fa;">0</div>
+            <div class="hm-label">Patches applied</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Gitflow + Gitarch + Gitsync -->
+      <div class="agent-panel" id="panel-right">
+
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;">REGULATION &amp; INTEGRATION</div>
+
+        <div class="agent-tile" id="tile-gitflow" style="--at-col:#60a5fa;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">≋</span>
+            <span class="agent-name">Gitflow</span>
+            <span class="agent-state state-standby" id="state-gitflow">STANDBY</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-gitflow" style="width:0%;background:#60a5fa;"></div></div>
+          <div class="agent-task" id="task-gitflow">Awaiting fork event…</div>
+        </div>
+
+        <div class="agent-tile" id="tile-gitarch" style="--at-col:#fbbf24;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">🏛</span>
+            <span class="agent-name">Gitarch</span>
+            <span class="agent-state state-standby" id="state-gitarch">STANDBY</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-gitarch" style="width:0%;background:#fbbf24;"></div></div>
+          <div class="agent-task" id="task-gitarch">No structural change needed</div>
+        </div>
+
+        <div class="agent-tile" id="tile-gitsync" style="--at-col:#34d399;">
+          <div class="agent-tile-header">
+            <span class="agent-symbol">⟲</span>
+            <span class="agent-name">Gitsync</span>
+            <span class="agent-state state-standby" id="state-gitsync">STANDBY</span>
+          </div>
+          <div class="agent-bar-wrap"><div class="agent-bar" id="bar-gitsync" style="width:0%;background:#34d399;"></div></div>
+          <div class="agent-task" id="task-gitsync">Awaiting merge signal…</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Event Log -->
+    <div class="event-log" id="event-log" style="margin-top:20px;">
+      <div class="event-log-title">◉ GP Suite Event Log — Real-Time</div>
+      <div class="log-entry info"><span class="log-ts">00:00:00</span><span>Giro core initialised · regulator field nominal</span></div>
+      <div class="log-entry info"><span class="log-ts">00:00:01</span><span>Gitpulse online · erythmia monitor active · E_idx = 0.03</span></div>
+      <div class="log-entry info"><span class="log-ts">00:00:02</span><span>Gitscan patrol started · perimeter clear</span></div>
+      <div class="log-entry success"><span class="log-ts">00:00:03</span><span>All systems nominal · awaiting glitch event</span></div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
 <footer>
   <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;">
@@ -1293,6 +1766,7 @@
       <span class="badge badge-blue">v1.0.0-prototype</span>
       <span class="badge badge-green">Open Research</span>
       <span class="badge" style="background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.3);">Cosmic Sysadmin Layer</span>
+      <span class="badge" style="background:rgba(251,191,36,.1);color:#fcd34d;border:1px solid rgba(251,191,36,.25);">GP Suite v1</span>
     </span>
   </div>
 </footer>
@@ -1787,9 +2261,6 @@
       const alpha = 0.4 + 0.6 * Math.abs(Math.sin(t * s.spd * 200 + s.phase));
       ctx.beginPath();
       ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = s.col.replace(')', `,${alpha})`).replace('rgb', 'rgba').replace('#', 'rgba(')
-        .replace('rgba(', '');
-      // simple approach
       ctx.globalAlpha = alpha;
       ctx.fillStyle = s.col;
       ctx.fill();
@@ -2011,46 +2482,47 @@
   const LANE = { main: 0.18, shadow: 0.5, patch: 0.82 };
   const COLORS = { main: '#3b82f6', shadow: '#c084fc', patch: '#10b981' };
 
-  // Commit history scrolling left
+  // Each event has an `offset` = how many px to the LEFT of the NOW cursor it sits.
+  // Positive offset = further in the past. New events start at offset 0 (right at NOW)
+  // and the canvas scrolls them leftward by increasing their offset each frame.
   const SCROLL_SPEED = 0.35; // px per frame
-  let scrollX = 0;
 
-  // Events
   let events = [
-    { type: 'commit', branch: 'main',   label: 'a3f9c12 Initial',    age: 700 },
-    { type: 'commit', branch: 'main',   label: '7e2d8ab Stable',      age: 520 },
-    { type: 'commit', branch: 'main',   label: 'c5b1f04 ⚠ Erythmia', age: 340, erythmia: true },
-    { type: 'fork',   from: 'main',     to: 'shadow',                  age: 310 },
-    { type: 'commit', branch: 'shadow', label: 'Observe field',        age: 270 },
-    { type: 'commit', branch: 'shadow', label: 'Analyse vectors',      age: 230 },
-    { type: 'fork',   from: 'shadow',   to: 'patch',                   age: 200 },
-    { type: 'commit', branch: 'patch',  label: 'Generate diff',        age: 170 },
-    { type: 'commit', branch: 'patch',  label: 'PID test ✓',           age: 130 },
-    { type: 'merge',  from: 'patch',    to: 'main',                    age: 100 },
-    { type: 'commit', branch: 'main',   label: '✓ Rhythm restored',   age: 80, healed: true },
+    { type: 'commit', branch: 'main',   label: 'a3f9c12 Initial',    offset: 700 },
+    { type: 'commit', branch: 'main',   label: '7e2d8ab Stable',      offset: 520 },
+    { type: 'commit', branch: 'main',   label: 'c5b1f04 ⚠ Erythmia', offset: 340, erythmia: true },
+    { type: 'fork',   from: 'main',     to: 'shadow',                  offset: 310 },
+    { type: 'commit', branch: 'shadow', label: 'Observe field',        offset: 270 },
+    { type: 'commit', branch: 'shadow', label: 'Analyse vectors',      offset: 230 },
+    { type: 'fork',   from: 'shadow',   to: 'patch',                   offset: 200 },
+    { type: 'commit', branch: 'patch',  label: 'Generate diff',        offset: 170 },
+    { type: 'commit', branch: 'patch',  label: 'PID test ✓',           offset: 130 },
+    { type: 'merge',  from: 'patch',    to: 'main',                    offset: 100 },
+    { type: 'commit', branch: 'main',   label: '✓ Rhythm restored',   offset: 80, healed: true },
   ];
-  let injecting = false, injectTimer = 0;
+  let injecting = false;
 
   c.addEventListener('click', () => {
     if (injecting) return;
-    injecting = true; injectTimer = 0;
-    // push a new erythmia + heal sequence
-    const base = -120;
+    injecting = true;
+    // New events start just ahead of NOW (negative offset = future, scrolls into view)
+    // and are spaced in ascending offset so they arrive in order.
     events.push(
-      { type: 'commit', branch: 'main',   label: '⚠ New Erythmia',  age: base,        erythmia: true },
-      { type: 'fork',   from: 'main',     to: 'shadow',              age: base + 30 },
-      { type: 'commit', branch: 'shadow', label: 'Observe',          age: base + 60 },
-      { type: 'fork',   from: 'shadow',   to: 'patch',               age: base + 80 },
-      { type: 'commit', branch: 'patch',  label: 'Patch authored',   age: base + 100 },
-      { type: 'merge',  from: 'patch',    to: 'main',                age: base + 130 },
-      { type: 'commit', branch: 'main',   label: '✓ Re-synced',      age: base + 150, healed: true }
+      { type: 'commit', branch: 'main',   label: '⚠ New Erythmia',  offset:  -20, erythmia: true },
+      { type: 'fork',   from: 'main',     to: 'shadow',              offset:  -50 },
+      { type: 'commit', branch: 'shadow', label: 'Observe',          offset:  -80 },
+      { type: 'fork',   from: 'shadow',   to: 'patch',               offset: -100 },
+      { type: 'commit', branch: 'patch',  label: 'Patch authored',   offset: -120 },
+      { type: 'merge',  from: 'patch',    to: 'main',                offset: -150 },
+      { type: 'commit', branch: 'main',   label: '✓ Re-synced',      offset: -170, healed: true }
     );
     setTimeout(() => { injecting = false; }, 5000);
   });
 
   function resize() { W = c.width = c.clientWidth; H = c.height = c.clientHeight; }
 
-  function xPos(age) { return W * 0.85 - age * 1.8 + scrollX; }
+  // x-position: NOW cursor is at W*0.85; events to the left are further in the past.
+  function xPos(offset) { return W * 0.85 - offset * 1.8; }
   function yPos(branch) { return H * LANE[branch]; }
 
   function drawNode(x, y, color, r, label, erythmia, healed) {
@@ -2093,12 +2565,13 @@
       ctx.restore();
     });
 
-    scrollX += SCROLL_SPEED;
+    // Advance time: increase all offsets so events scroll leftward
+    events.forEach(ev => { ev.offset += SCROLL_SPEED; });
 
     // Draw connections (fork/merge arcs) first (behind nodes)
     events.forEach(ev => {
       if (ev.type === 'fork' || ev.type === 'merge') {
-        const x = xPos(ev.age);
+        const x = xPos(ev.offset);
         const y1 = yPos(ev.from), y2 = yPos(ev.to);
         if (x < -80 || x > W + 80) return;
         ctx.beginPath();
@@ -2112,11 +2585,11 @@
     // Draw commit nodes
     events.forEach(ev => {
       if (ev.type === 'commit') {
-        drawNode(xPos(ev.age), yPos(ev.branch), COLORS[ev.branch], 7, ev.label, ev.erythmia, ev.healed);
+        drawNode(xPos(ev.offset), yPos(ev.branch), COLORS[ev.branch], 7, ev.label, ev.erythmia, ev.healed);
       }
     });
 
-    // Advancing "now" cursor
+    // Static "now" cursor line
     ctx.save();
     ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1; ctx.setLineDash([4, 6]);
     ctx.beginPath(); ctx.moveTo(W * 0.85, 0); ctx.lineTo(W * 0.85, H); ctx.stroke(); ctx.setLineDash([]);
@@ -2125,6 +2598,458 @@
     ctx.restore();
 
     t += 1; requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(c);
+  resize(); draw();
+})();
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   QUANTUM RHYTHM ENGINE — schematic canvas
+═══════════════════════════════════════════════════════════════════ */
+(function () {
+  const c = document.getElementById('qre-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() { W = c.width = c.clientWidth; H = c.height = c.clientHeight; }
+
+  function draw() {
+    resize();
+    ctx.clearRect(0, 0, W, H);
+
+    // deep space background
+    ctx.fillStyle = '#06030f'; ctx.fillRect(0, 0, W, H);
+
+    const cx = W / 2, cy = H / 2;
+    const R  = Math.min(W, H) * 0.42;
+
+    /* ── Inertia dampener fins (outermost) ──────────────────────── */
+    const finCount = 8;
+    for (let i = 0; i < finCount; i++) {
+      const a = (i / finCount) * Math.PI * 2 + t * 0.003;
+      const x0 = cx + (R * 1.05) * Math.cos(a);
+      const y0 = cy + (R * 1.05) * Math.sin(a);
+      const x1 = cx + (R * 1.25) * Math.cos(a - 0.18);
+      const y1 = cy + (R * 1.25) * Math.sin(a - 0.18);
+      const x2 = cx + (R * 1.25) * Math.cos(a + 0.18);
+      const y2 = cy + (R * 1.25) * Math.sin(a + 0.18);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.lineTo(x2, y2); ctx.closePath();
+      ctx.fillStyle = `rgba(96,165,250,${0.10 + 0.08 * Math.abs(Math.sin(t * 0.02 + i))})`;
+      ctx.strokeStyle = 'rgba(96,165,250,0.4)'; ctx.lineWidth = 1;
+      ctx.fill(); ctx.stroke();
+    }
+
+    /* ── Outer orbit ring ───────────────────────────────────────── */
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(59,130,246,0.25)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    /* ── Vector Triangulation Array (6 Gitpin ∆ sensors) ───────── */
+    const pinCount = 6;
+    const pinR = R * 0.88;
+    for (let i = 0; i < pinCount; i++) {
+      const a = (i / pinCount) * Math.PI * 2 + t * 0.006;
+      const px = cx + pinR * Math.cos(a);
+      const py = cy + pinR * Math.sin(a);
+      const size = 10;
+      const active = (t % 180) > (i * 30) && (t % 180) < (i * 30 + 60);
+      ctx.save(); ctx.translate(px, py); ctx.rotate(a + Math.PI / 2);
+      ctx.beginPath();
+      ctx.moveTo(0, -size); ctx.lineTo(size * 0.866, size * 0.5); ctx.lineTo(-size * 0.866, size * 0.5);
+      ctx.closePath();
+      ctx.fillStyle = active ? 'rgba(251,191,36,0.7)' : 'rgba(251,191,36,0.12)';
+      ctx.strokeStyle = active ? '#fbbf24' : 'rgba(251,191,36,0.4)';
+      ctx.lineWidth = 1.2; ctx.fill(); ctx.stroke();
+      if (active) {
+        // scan beam from triangle toward centre
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -(pinR - R * 0.14));
+        ctx.strokeStyle = 'rgba(251,191,36,0.3)'; ctx.lineWidth = 1; ctx.setLineDash([3, 5]); ctx.stroke(); ctx.setLineDash([]);
+      }
+      ctx.restore();
+    }
+
+    /* ── Mid orbit ring ─────────────────────────────────────────── */
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.6, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(59,130,246,0.18)'; ctx.lineWidth = 1; ctx.stroke();
+
+    /* ── GP Suite agent nodes on mid orbit ─────────────────────── */
+    const agents = [
+      { sym: '≋', col: '#60a5fa', name: 'Gitflow'  },
+      { sym: '♥', col: '#f87171', name: 'Gitpulse' },
+      { sym: '🏛', col: '#fbbf24', name: 'Gitarch'  },
+      { sym: '⟲', col: '#34d399', name: 'Gitsync'  },
+      { sym: '◈', col: '#a78bfa', name: 'Gitscan'  },
+    ];
+    agents.forEach((ag, i) => {
+      const a = (i / agents.length) * Math.PI * 2 - t * 0.008;
+      const ax = cx + R * 0.6 * Math.cos(a);
+      const ay = cy + R * 0.6 * Math.sin(a);
+      const glow = ctx.createRadialGradient(ax, ay, 0, ax, ay, 18);
+      glow.addColorStop(0, ag.col + 'aa'); glow.addColorStop(1, 'transparent');
+      ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(ax, ay, 18, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = ag.col; ctx.beginPath(); ctx.arc(ax, ay, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 9px monospace';
+      ctx.textAlign = 'center'; ctx.fillText(ag.name, ax, ay + 20);
+      // spoke to core
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(cx, cy);
+      ctx.strokeStyle = ag.col + '22'; ctx.lineWidth = 1; ctx.stroke();
+    });
+
+    /* ── Inner (centrifugal) core rings ─────────────────────────── */
+    const coreR = R * 0.28;
+    // spinning ring 1
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.025);
+    ctx.beginPath(); ctx.ellipse(0, 0, coreR, coreR * 0.35, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(59,130,246,0.8)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+    // spinning ring 2
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-t * 0.018 + 1);
+    ctx.beginPath(); ctx.ellipse(0, 0, coreR, coreR * 0.35, Math.PI / 2, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(239,68,68,0.65)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+    // spinning ring 3 (tilted)
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.011 + 2.1);
+    ctx.beginPath(); ctx.ellipse(0, 0, coreR * 0.7, coreR * 0.7, Math.PI / 4, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(16,185,129,0.6)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.restore();
+    // core glow
+    const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR * 0.8);
+    cg.addColorStop(0, 'rgba(255,255,255,0.22)'); cg.addColorStop(0.5, 'rgba(59,130,246,0.08)'); cg.addColorStop(1, 'transparent');
+    ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, coreR * 0.8, 0, Math.PI * 2); ctx.fill();
+    // centre dot
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+
+    /* ── Repo-Link Port ─────────────────────────────────────────── */
+    const portA = Math.PI * 1.65 + t * 0.003;
+    const portX = cx + (R * 1.18) * Math.cos(portA);
+    const portY = cy + (R * 1.18) * Math.sin(portA);
+    ctx.save();
+    // Port glow
+    const pg = ctx.createRadialGradient(portX, portY, 0, portX, portY, 20);
+    pg.addColorStop(0, 'rgba(16,185,129,0.6)'); pg.addColorStop(1, 'transparent');
+    ctx.fillStyle = pg; ctx.beginPath(); ctx.arc(portX, portY, 20, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#10b981'; ctx.font = '14px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('📡', portX, portY + 5);
+    ctx.fillStyle = 'rgba(16,185,129,0.7)'; ctx.font = 'bold 8px monospace';
+    ctx.fillText('REPO-LINK', portX, portY + 18);
+    // pulse signal line from port to outer ring
+    const psAlpha = 0.3 + 0.7 * Math.abs(Math.sin(t * 0.08));
+    ctx.beginPath(); ctx.moveTo(portX, portY);
+    const nearX = cx + R * Math.cos(portA), nearY = cy + R * Math.sin(portA);
+    ctx.lineTo(nearX, nearY);
+    ctx.strokeStyle = `rgba(16,185,129,${psAlpha})`; ctx.lineWidth = 1.5; ctx.setLineDash([3, 5]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+
+    /* ── Labels ─────────────────────────────────────────────────── */
+    ctx.save();
+    ctx.fillStyle = 'rgba(96,165,250,0.55)'; ctx.font = 'bold 8px monospace'; ctx.textAlign = 'center';
+    ctx.fillText('INERTIA DAMPENERS', cx, cy - R * 1.32);
+    ctx.fillStyle = 'rgba(251,191,36,0.6)';
+    ctx.fillText('VECTOR TRIANGULATION ARRAY', cx, cy - R * 0.96);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText('CENTRIFUGAL CORE', cx, cy + 18);
+    ctx.restore();
+
+    t += 1; requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(c);
+  resize(); draw();
+})();
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   MISSION CONTROL — HUD canvas + Dashboard logic
+═══════════════════════════════════════════════════════════════════ */
+(function () {
+  const c = document.getElementById('hud-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+
+  // ── Dashboard state ──────────────────────────────────────────
+  let erythmiaIdx  = 0.03;
+  let rhythmHealth = 97;
+  let patchCount   = 0;
+  let glitches     = [];    // active glitch objects
+  let healPhase    = 'idle'; // idle | detected | forking | analysing | patching | merging | healed
+  let phaseTimer   = 0;
+  let logTime      = 4;
+
+  // DOM refs
+  const elEry    = document.getElementById('hm-erythmia');
+  const elHealth = document.getElementById('hm-health');
+  const elPatch  = document.getElementById('hm-patches');
+  const log      = document.getElementById('event-log');
+
+  const agents = {
+    giro:     { bar: 'bar-giro',     state: 'state-giro',     task: 'task-giro',     pct: 100 },
+    gitpulse: { bar: 'bar-gitpulse', state: 'state-gitpulse', task: 'task-gitpulse', pct: 20  },
+    gitscan:  { bar: 'bar-gitscan',  state: 'state-gitscan',  task: 'task-gitscan',  pct: 35  },
+    gitflow:  { bar: 'bar-gitflow',  state: 'state-gitflow',  task: 'task-gitflow',  pct: 0   },
+    gitarch:  { bar: 'bar-gitarch',  state: 'state-gitarch',  task: 'task-gitarch',  pct: 0   },
+    gitsync:  { bar: 'bar-gitsync',  state: 'state-gitsync',  task: 'task-gitsync',  pct: 0   },
+  };
+
+  function setAgent(id, stateCls, taskText, pct) {
+    const a = agents[id]; if (!a) return;
+    const barEl   = document.getElementById(a.bar);
+    const stateEl = document.getElementById(a.state);
+    const taskEl  = document.getElementById(a.task);
+    if (barEl)   barEl.style.width = pct + '%';
+    if (stateEl) { stateEl.className = 'agent-state ' + stateCls; stateEl.textContent = stateCls === 'state-active' ? 'ACTIVE' : stateCls === 'state-alert' ? 'ALERT' : 'STANDBY'; }
+    if (taskEl)  taskEl.textContent = taskText;
+    a.pct = pct;
+  }
+
+  function addLog(type, msg) {
+    const ts = String(Math.floor(logTime / 60)).padStart(2,'0') + ':' + String(logTime % 60).padStart(2,'0') + ':00';
+    logTime++;
+    const el = document.createElement('div');
+    el.className = 'log-entry ' + type;
+    el.innerHTML = `<span class="log-ts">${ts}</span><span>${msg}</span>`;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  class Glitch {
+    constructor(x, y) {
+      this.x = x; this.y = y;
+      this.intensity = 0;
+      this.maxI = 0.7 + Math.random() * 0.3;
+      this.radius = 20 + Math.random() * 20;
+      this.phase = 'growing';  // growing | steady | healing | dead
+      this.age = 0;
+    }
+  }
+
+  c.addEventListener('click', e => {
+    if (healPhase !== 'idle' && healPhase !== 'healed') return;
+    const r = c.getBoundingClientRect();
+    glitches.push(new Glitch(e.clientX - r.left, e.clientY - r.top));
+    triggerHealCycle();
+  });
+  c.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if (healPhase !== 'idle' && healPhase !== 'healed') return;
+    const r = c.getBoundingClientRect();
+    glitches.push(new Glitch(e.changedTouches[0].clientX - r.left, e.changedTouches[0].clientY - r.top));
+    triggerHealCycle();
+  }, { passive: false });
+
+  function triggerHealCycle() {
+    healPhase = 'detected'; phaseTimer = 0;
+    erythmiaIdx = 0.85;
+
+    setAgent('giro',     'state-alert',  'Erythmia detected! Initiating heal…', 60);
+    setAgent('gitpulse', 'state-alert',  'E_idx = 0.85 · OFF-BEAT FLAGGED',    100);
+    setAgent('gitscan',  'state-active', 'Scanning for external interference',  80);
+    setAgent('gitflow',  'state-active', 'Momentum buffer engaged',             40);
+    setAgent('gitarch',  'state-standby','Assessing structural impact…',        15);
+    setAgent('gitsync',  'state-standby','Waiting for patch…',                   5);
+
+    addLog('warn', 'Gitpulse ♥ — off-beat detected · E_idx = 0.85');
+    addLog('warn', 'Giro 🌀 — erythmia event · initiating heal cycle');
+    addLog('info', 'Gitflow ≋ — forking universe/main → giro/shadow-pool');
+  }
+
+  const PHASES = [
+    { id: 'detected',   dur: 90,  next: 'forking'    },
+    { id: 'forking',    dur: 120, next: 'analysing'  },
+    { id: 'analysing',  dur: 150, next: 'patching'   },
+    { id: 'patching',   dur: 120, next: 'merging'    },
+    { id: 'merging',    dur: 100, next: 'healed'     },
+    { id: 'healed',     dur: 180, next: 'idle'       },
+  ];
+
+  function resize() { W = c.width = c.clientWidth; H = c.height = c.clientHeight; }
+
+  function draw() {
+    resize();
+
+    /* ── Phase state machine ─────────────────────────────────── */
+    phaseTimer++;
+    const ph = PHASES.find(p => p.id === healPhase);
+    if (ph && phaseTimer >= ph.dur) {
+      phaseTimer = 0;
+      const prev = healPhase;
+      healPhase = ph.next;
+
+      if (healPhase === 'analysing') {
+        setAgent('gitpulse', 'state-active', 'Mapping erythmia vectors…', 75);
+        setAgent('gitflow',  'state-active', 'Shadow pool stable', 70);
+        setAgent('gitarch',  'state-active', 'Analysing physics layer…', 45);
+        addLog('info', 'Gitarch 🏛 — structural analysis in progress');
+        addLog('info', 'Gitscan ◈ — perimeter secure · no external forces');
+      }
+      if (healPhase === 'patching') {
+        setAgent('giro',     'state-active', 'Authoring corrective patch…', 85);
+        setAgent('gitpulse', 'state-active', 'E_idx falling…', 60);
+        setAgent('gitarch',  'state-active', 'Patch authored · PID test running', 80);
+        addLog('info', 'Giro 🌀 — patch authored · running PID test on shadow clone');
+        glitches.forEach(g => { g.phase = 'healing'; });
+      }
+      if (healPhase === 'merging') {
+        setAgent('gitsync',  'state-active', 'Merging patch → universe/main…', 70);
+        setAgent('gitflow',  'state-active', 'Fast-forward merge in progress', 90);
+        addLog('info', 'Gitsync ⟲ — merge initiated · fast-forward strategy');
+        addLog('info', 'Gitflow ≋ — momentum handoff smooth · no rhythm shock');
+        erythmiaIdx = 0.18;
+      }
+      if (healPhase === 'healed') {
+        erythmiaIdx = 0.03; rhythmHealth = 99; patchCount++;
+        setAgent('giro',     'state-active', 'Regulator field nominal', 100);
+        setAgent('gitpulse', 'state-active', 'E_idx = 0.03 · nominal', 20);
+        setAgent('gitscan',  'state-active', 'Perimeter clear', 35);
+        setAgent('gitflow',  'state-standby','Awaiting next fork…', 0);
+        setAgent('gitarch',  'state-standby','No structural change needed', 0);
+        setAgent('gitsync',  'state-standby','Awaiting merge signal…', 0);
+        glitches = glitches.filter(g => g.intensity > 0.02);
+        addLog('success', `Gitsync ⟲ — merge complete · patch #${patchCount} applied`);
+        addLog('success', 'Giro 🌀 — rhythm restored · E_idx = 0.03');
+      }
+      if (healPhase === 'idle') {
+        glitches = [];
+      }
+    }
+
+    /* ── Update glitch intensities ───────────────────────────── */
+    glitches.forEach(g => {
+      g.age++;
+      if (g.phase === 'growing')  g.intensity = Math.min(g.intensity + 0.025, g.maxI);
+      if (g.phase === 'healing')  g.intensity = Math.max(g.intensity - 0.012, 0);
+    });
+
+    /* ── Draw HUD ────────────────────────────────────────────── */
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#06030f'; ctx.fillRect(0, 0, W, H);
+
+    // grid
+    ctx.save();
+    ctx.strokeStyle = 'rgba(59,130,246,0.05)'; ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 48) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 48) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    ctx.restore();
+
+    // Central field rings (Giro core projection)
+    const cx = W / 2, cy = H / 2;
+    [0.38, 0.27, 0.17].forEach((rr, i) => {
+      ctx.beginPath(); ctx.arc(cx, cy, Math.min(W,H) * rr, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(59,130,246,${0.08 + i * 0.04})`; ctx.lineWidth = 1; ctx.stroke();
+    });
+    // spinning regulator ring
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * 0.015);
+    ctx.beginPath(); ctx.ellipse(0, 0, Math.min(W,H) * 0.22, Math.min(W,H) * 0.06, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(59,130,246,${healPhase !== 'idle' && healPhase !== 'healed' ? 0.8 : 0.35})`; ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-t * 0.011 + 1);
+    ctx.beginPath(); ctx.ellipse(0, 0, Math.min(W,H) * 0.22, Math.min(W,H) * 0.06, Math.PI/2, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(239,68,68,${healPhase !== 'idle' && healPhase !== 'healed' ? 0.7 : 0.25})`; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.restore();
+    // core dot
+    const coreAlpha = 0.7 + 0.3 * Math.abs(Math.sin(t * 0.06));
+    const coreG = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16);
+    coreG.addColorStop(0, `rgba(255,255,255,${coreAlpha})`); coreG.addColorStop(1, 'transparent');
+    ctx.fillStyle = coreG; ctx.beginPath(); ctx.arc(cx, cy, 16, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2); ctx.fill();
+
+    // GP agent nodes around core
+    const agentDefs = [
+      { id:'gitflow',  sym:'≋', col:'#60a5fa' },
+      { id:'gitpulse', sym:'♥', col:'#f87171' },
+      { id:'gitarch',  sym:'🏛', col:'#fbbf24' },
+      { id:'gitsync',  sym:'⟲', col:'#34d399' },
+      { id:'gitscan',  sym:'◈', col:'#a78bfa' },
+    ];
+    const orbitR = Math.min(W, H) * 0.35;
+    agentDefs.forEach((ag, i) => {
+      const a = (i / agentDefs.length) * Math.PI * 2 - t * 0.005;
+      const ax = cx + orbitR * Math.cos(a);
+      const ay = cy + orbitR * Math.sin(a);
+      const pct = agents[ag.id] ? agents[ag.id].pct : 0;
+      const active = pct > 30;
+      // glow
+      if (active) {
+        const g2 = ctx.createRadialGradient(ax, ay, 0, ax, ay, 22);
+        g2.addColorStop(0, ag.col + '55'); g2.addColorStop(1, 'transparent');
+        ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(ax, ay, 22, 0, Math.PI * 2); ctx.fill();
+        // spoke
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ax, ay);
+        ctx.strokeStyle = ag.col + '30'; ctx.lineWidth = 1; ctx.stroke();
+      }
+      ctx.fillStyle = active ? ag.col : ag.col + '44';
+      ctx.beginPath(); ctx.arc(ax, ay, active ? 7 : 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = active ? '#fff' : 'rgba(255,255,255,0.4)';
+      ctx.font = '9px monospace'; ctx.textAlign = 'center';
+      ctx.fillText(ag.sym, ax, ay + 3);
+      // activity arc
+      if (active && pct > 0) {
+        ctx.beginPath(); ctx.arc(ax, ay, 11, -Math.PI/2, -Math.PI/2 + (pct/100)*Math.PI*2);
+        ctx.strokeStyle = ag.col; ctx.lineWidth = 2; ctx.stroke();
+      }
+    });
+
+    // Glitch blobs
+    glitches.forEach(g => {
+      if (g.intensity < 0.01) return;
+      const gr = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.radius * 2);
+      gr.addColorStop(0,   `rgba(239,68,68,${g.intensity * 0.9})`);
+      gr.addColorStop(0.4, `rgba(220,80,50,${g.intensity * 0.5})`);
+      gr.addColorStop(1,   'transparent');
+      ctx.beginPath(); ctx.arc(g.x, g.y, g.radius * 2, 0, Math.PI * 2);
+      ctx.fillStyle = gr; ctx.fill();
+      // healing ring
+      if (g.phase === 'healing') {
+        const rr = (g.age % 80) / 80 * 60;
+        const ra = Math.max(0, 0.6 - rr / 60) * g.intensity;
+        ctx.beginPath(); ctx.arc(g.x, g.y, rr, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(16,185,129,${ra})`; ctx.lineWidth = 2; ctx.stroke();
+      }
+    });
+
+    // Phase status banner
+    const bannerText = {
+      idle:       '● STANDBY — awaiting glitch',
+      detected:   '⚠ ERYTHMIA DETECTED — Gitpulse flagging',
+      forking:    '⟳ FORKING — Gitflow smoothing transition',
+      analysing:  '◈ ANALYSING — Gitarch + Gitscan active',
+      patching:   '🔧 PATCHING — Giro authoring diff',
+      merging:    '⟲ MERGING — Gitsync integrating patch',
+      healed:     '✓ HEALED — rhythm restored',
+    };
+    const bannerColor = {
+      idle:'rgba(59,130,246,0.8)', detected:'rgba(239,68,68,0.9)',
+      forking:'rgba(96,165,250,0.9)', analysing:'rgba(251,191,36,0.9)',
+      patching:'rgba(239,68,68,0.9)', merging:'rgba(52,211,153,0.9)',
+      healed:'rgba(52,211,153,0.9)',
+    };
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.roundRect(10, 10, W - 20, 28, 6); ctx.fill();
+    ctx.fillStyle = bannerColor[healPhase] || '#fff';
+    ctx.font = 'bold 11px monospace'; ctx.textAlign = 'center';
+    ctx.fillText(bannerText[healPhase] || '', W / 2, 29);
+    ctx.restore();
+
+    // Update metrics DOM
+    if (elEry)    elEry.textContent    = erythmiaIdx.toFixed(2);
+    if (elHealth) elHealth.textContent = Math.round(rhythmHealth) + '%';
+    if (elPatch)  elPatch.textContent  = patchCount;
+
+    // Transition erythmia smoothly
+    const targetEry = healPhase === 'idle' || healPhase === 'healed' ? 0.03
+                    : healPhase === 'detected' || healPhase === 'forking' ? 0.85
+                    : healPhase === 'analysing' ? 0.65
+                    : healPhase === 'patching'  ? 0.4
+                    : 0.18;
+    erythmiaIdx += (targetEry - erythmiaIdx) * 0.03;
+    rhythmHealth = 100 - erythmiaIdx * 40;
+    if (elEry) elEry.style.color = erythmiaIdx > 0.5 ? '#f87171' : erythmiaIdx > 0.2 ? '#fbbf24' : '#34d399';
+    if (elHealth) elHealth.style.color = rhythmHealth > 80 ? '#34d399' : rhythmHealth > 60 ? '#fbbf24' : '#f87171';
+
+    t++; requestAnimationFrame(draw);
   }
 
   new ResizeObserver(resize).observe(c);

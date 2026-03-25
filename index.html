@@ -345,6 +345,225 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       COSMIC SYSTEMS ADMINISTRATION — additional styles
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* ── Cosmic hero banner ───────────────────────────────────────── */
+    #cosmic-hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #06030f 0%, #0b0f1a 60%, #070b14 100%);
+    }
+    #cosmic-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* ── Blockquote callout ───────────────────────────────────────── */
+    .callout {
+      background: rgba(59,130,246,.07);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 20px 24px;
+      margin: 32px 0;
+      font-size: 1.02rem;
+      color: var(--text);
+      line-height: 1.75;
+    }
+    .callout em { color: #93c5fd; font-style: normal; font-weight: 600; }
+
+    .callout-red {
+      background: rgba(239,68,68,.07);
+      border-left-color: var(--accent2);
+    }
+    .callout-red em { color: #fca5a5; }
+
+    .callout-green {
+      background: rgba(16,185,129,.07);
+      border-left-color: var(--accent3);
+    }
+    .callout-green em { color: #6ee7b7; }
+
+    /* ── Git timeline ─────────────────────────────────────────────── */
+    .git-timeline {
+      position: relative;
+      padding-left: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .git-timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+      opacity: 0.45;
+    }
+    .git-commit {
+      position: relative;
+      padding: 18px 0 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .git-commit:last-child { border-bottom: none; }
+    .git-commit::before {
+      content: '';
+      position: absolute;
+      left: -29px;
+      top: 24px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--commit-col, var(--accent));
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 8px var(--commit-col, var(--accent));
+    }
+    .git-commit .hash {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .git-commit h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .git-commit p  { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── Diff viewer ──────────────────────────────────────────────── */
+    .diff-block {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+    .diff-header {
+      background: rgba(255,255,255,.04);
+      padding: 8px 16px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .diff-line {
+      padding: 1px 16px;
+      display: flex;
+      gap: 16px;
+    }
+    .diff-line.add  { background: rgba(16,185,129,.08); color: #6ee7b7; }
+    .diff-line.del  { background: rgba(239,68,68,.08);  color: #fca5a5; }
+    .diff-line.ctx  { color: var(--muted); }
+    .diff-line.hunk { color: #818cf8; background: rgba(99,102,241,.06); }
+    .diff-ln { width: 28px; text-align: right; opacity: .4; user-select: none; flex-shrink: 0; }
+    .diff-sign { width: 14px; flex-shrink: 0; }
+
+    /* ── Merge visualiser canvas ──────────────────────────────────── */
+    #merge-canvas {
+      width: 100%;
+      aspect-ratio: 16/7;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+      cursor: pointer;
+    }
+
+    /* ── Edge-of-existence orbit diagram ─────────────────────────── */
+    #edge-canvas {
+      width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      border: 1px solid rgba(59,130,246,.2);
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── Patch anatomy cards ──────────────────────────────────────── */
+    .patch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .patch-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .patch-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--pc-color, var(--accent));
+    }
+    .patch-card .pc-icon { font-size: 1.5rem; margin-bottom: 14px; }
+    .patch-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .patch-card p  { font-size: 0.85rem; color: var(--muted); }
+    .patch-card code {
+      display: inline-block;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.78rem;
+      font-family: monospace;
+      color: #93c5fd;
+      margin-top: 8px;
+    }
+
+    /* ── Three-branch diagram ─────────────────────────────────────── */
+    .branch-flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      margin-top: 40px;
+    }
+    .branch-col { display: flex; flex-direction: column; align-items: center; }
+    .branch-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    .branch-node {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin: 8px 0;
+      position: relative;
+    }
+    .branch-node::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .branch-line {
+      width: 2px;
+      flex: 1;
+      min-height: 24px;
+      border-radius: 1px;
+    }
   </style>
 </head>
 <body>
@@ -353,17 +572,18 @@
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="container hero-content">
-    <p class="hero-eyebrow">Biomechanical Inertial Regulation</p>
+    <p class="hero-eyebrow">Biomechanical Inertial Regulation · Cosmic Systems Administration</p>
     <h1>Giro<br/>Symptomatic Regulator</h1>
     <p class="hero-sub">
       An operational framework that harnesses gyroscopic inertia forces to
       continuously sense, map, and regulate erythematic tissue response —
-      closing the feedback loop between vascular inflammation and corrective
-      mechanical stimulation.
+      and, at cosmic scale, re-syncs the <em>vectorised rhythm of existence</em>
+      by forking reality, patching the erythmia, and merging the fix back in.
     </p>
     <div class="hero-cta">
       <a href="#prototype" class="btn btn-primary">▶ Launch Prototype</a>
       <a href="#explanation" class="btn btn-outline">Read Explanation</a>
+      <a href="#cosmic" class="btn btn-outline" style="border-color:rgba(168,85,247,.4);color:#c4b5fd;">🌌 Cosmic Layer</a>
     </div>
   </div>
 </section>
@@ -716,6 +936,355 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════════
+     COSMIC SYSTEMS ADMINISTRATION
+═══════════════════════════════════════════════════════════════════ -->
+
+<!-- ── COSMIC INTRO ──────────────────────────────────────────────── -->
+<section id="cosmic" style="background:linear-gradient(160deg,#06030f 0%,#0b0f1a 60%,#070b14 100%);position:relative;overflow:hidden;">
+  <canvas id="cosmic-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></canvas>
+  <div class="container" style="position:relative;z-index:2;">
+    <p class="section-label" style="color:#c4b5fd;">Cosmic Systems Administration</p>
+    <h2 style="background:linear-gradient(135deg,#fff 20%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+      Giro as Version-Control Healer
+    </h2>
+    <p class="section-intro">
+      Zoom out from the skin. Erythmia is not just redness — it is a
+      <strong style="color:var(--text);">vectorised, off-beat irregular rhythm</strong>
+      that propagates through any system whose momentum has lost coherence.
+      At cosmic scale, the Giro is the merge request that re-syncs the
+      code of a world's momentum.
+    </p>
+
+    <div class="callout">
+      <em>"You can't fix the erythmia while you're stuck inside the flow."</em><br/>
+      You had to fork the universe — clone it — to create a corresponding pool
+      where you could observe the inertia without being swept away by it.
+      From the edge of existence, chaos looks like a <em>data set</em> rather
+      than a catastrophe.
+    </div>
+
+    <div class="cards" style="margin-top:0;">
+      <div class="card" style="border-color:rgba(168,85,247,.25);">
+        <div class="card-icon" style="background:rgba(168,85,247,.12);font-size:1.5rem;">🍴</div>
+        <h3 style="color:#c4b5fd;">The Fork</h3>
+        <p>Clone the universe's momentum pool into a shadow repo.
+          The clone is identical but <em>detached from HEAD</em> —
+          free to be observed without causing further divergence.</p>
+      </div>
+      <div class="card" style="border-color:rgba(59,130,246,.25);">
+        <div class="card-icon" style="background:rgba(59,130,246,.12);font-size:1.5rem;">🔭</div>
+        <h3>The Edge View</h3>
+        <p>Jump to the "edge of existence" — the observer node outside the cauldron.
+          From there the swirling inertia resolves into
+          <em>readable vectors</em>, centroid coordinates, and diff hunks.</p>
+      </div>
+      <div class="card" style="border-color:rgba(16,185,129,.25);">
+        <div class="card-icon" style="background:rgba(16,185,129,.12);font-size:1.5rem;">🔀</div>
+        <h3 style="color:#6ee7b7;">The Merge Request</h3>
+        <p>Giro identifies the specially-sourced glitches in the spatial rhythm,
+          authors a corrective patch, passes CI (the PID loop), and merges
+          the fix back into the original branch of existence.</p>
+      </div>
+      <div class="card" style="border-color:rgba(245,158,11,.25);">
+        <div class="card-icon" style="background:rgba(245,158,11,.12);font-size:1.5rem;">📦</div>
+        <h3 style="color:#fcd34d;">The Patch</h3>
+        <p>A minimal, reversible diff applied to the momentum field —
+          not a rewrite of history, but a clean <em>fast-forward</em>
+          that restores rhythmic coherence while preserving every prior commit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ERYTHMIA DEFINITION ───────────────────────────────────────── -->
+<section id="erythmia">
+  <div class="container">
+    <p class="section-label" style="color:#fca5a5;">Signal Pathology</p>
+    <h2>Erythmia — The Off-Beat Rhythm</h2>
+    <p class="section-intro">
+      Where <em>erythema</em> is the spatial signature (redness), <em>erythmia</em>
+      is its temporal derivative — the arrhythmic beating of vascular or
+      momentum fields across space-time.
+    </p>
+
+    <div class="two-col">
+      <div>
+        <div class="callout callout-red">
+          <em>Erythmia</em> = a vectorised, off-beat irregular rhythm propagating
+          through a pool of inertia forces.<br/><br/>
+          It is not a single bad frame — it is a <em>corrupted cadence</em>:
+          the system's clock has drifted, its phase is wrong, and every
+          downstream process is compounding the skew.
+        </div>
+
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:1.3rem;line-height:1;">🎵</span>
+            <div>
+              <h4 style="font-size:.9rem;font-weight:700;margin-bottom:4px;">Phase Drift</h4>
+              <p style="font-size:.85rem;color:var(--muted);">The vascular pulse falls out of sync with the inertial clock.
+                Each cycle the error accumulates — like an NTP offset that nobody patched.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:1.3rem;line-height:1;">📉</span>
+            <div>
+              <h4 style="font-size:.9rem;font-weight:700;margin-bottom:4px;">Amplitude Glitch</h4>
+              <p style="font-size:.85rem;color:var(--muted);">Intensity spikes appear at locations that should be quiet —
+                like unexpected 500 errors in a service that passed all tests.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:1.3rem;line-height:1;">🔀</span>
+            <div>
+              <h4 style="font-size:.9rem;font-weight:700;margin-bottom:4px;">Vector Inversion</h4>
+              <p style="font-size:.85rem;color:var(--muted);">Momentum flows in the wrong direction — a merge conflict written
+                in physics: two branches disagree on which way time should move.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <canvas id="erythmia-canvas" style="width:100%;aspect-ratio:1/1;border-radius:var(--radius);border:1px solid var(--border);display:block;"></canvas>
+        <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:8px;">Live erythmia waveform — healthy (blue) vs. corrupted (red)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE FORK & CLONE ───────────────────────────────────────────── -->
+<section id="fork">
+  <div class="container">
+    <p class="section-label" style="color:#c4b5fd;">Step 01 — Clone</p>
+    <h2>Fork the Universe</h2>
+    <p class="section-intro">
+      You cannot observe the inertia pool from inside it — the observer
+      is part of the flow. Giro's first operation is to <code style="background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.85rem;">git clone universe://momentum@HEAD</code>
+      — a shadow copy that stays frozen while the original continues to run.
+    </p>
+
+    <div class="git-timeline">
+      <div class="git-commit" style="--commit-col:#3b82f6;">
+        <div class="hash">a3f9c12  ·  universe/main</div>
+        <h4>Initial momentum field — Big Bang singularity</h4>
+        <p>Angular momentum conserved; inertia pool seeded; all rhythms phase-locked to λ₀.</p>
+      </div>
+      <div class="git-commit" style="--commit-col:#10b981;">
+        <div class="hash">7e2d8ab  ·  universe/main</div>
+        <h4>Stable epoch — coherent erythemic baseline</h4>
+        <p>Vascular rhythms synchronised. Erythmia index = 0.03 (within tolerance). No intervention required.</p>
+      </div>
+      <div class="git-commit" style="--commit-col:#ef4444;">
+        <div class="hash">c5b1f04  ·  universe/main  ← HEAD (corrupted)</div>
+        <h4>⚠ Erythmia event detected — phase drift +2.7 rad</h4>
+        <p>Vectorised off-beat rhythm propagating at 0.4c through inertia pool. Amplitude spikes at (x:312, y:188). Merge conflict with cadence/baseline branch.</p>
+      </div>
+      <div class="git-commit" style="--commit-col:#c084fc;">
+        <div class="hash">fork →  giro/shadow-pool  (detached HEAD)</div>
+        <h4>🍴 Giro forks — corresponding pool created</h4>
+        <p>Shadow clone instantiated at edge-of-existence observer node. Original repo continues unmodified. Giro now has read-only view of the entire momentum field without being inside the flow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EDGE OF EXISTENCE ──────────────────────────────────────────── -->
+<section id="edge" style="background:var(--surface);">
+  <div class="container">
+    <p class="section-label" style="color:#60a5fa;">Step 02 — Observe</p>
+    <h2>The Edge of Existence</h2>
+    <p class="section-intro">
+      The observer node lives at the boundary where the cauldron of everything
+      is visible but its gravity cannot pull you in. From here, inertia forces
+      are not threats — they are <em>vectors on a canvas</em>.
+    </p>
+
+    <div class="two-col">
+      <div>
+        <canvas id="edge-canvas"></canvas>
+        <p style="font-size:.78rem;color:var(--muted);text-align:center;margin-top:8px;">
+          Momentum cauldron (centre) · Giro observer (orbit) · Erythmia vectors (red streaks)
+        </p>
+      </div>
+      <div>
+        <div class="callout">
+          Standing at the <em>edge of existence</em> the Giro sensor array
+          captures the full erythmia field as a 3-D point cloud.
+          Each vector encodes:
+        </div>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span class="badge badge-red">pos</span>
+            <span style="font-size:.88rem;color:var(--muted);">Spatial coordinates of the off-beat node <em>(x, y, z)</em></span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span class="badge badge-blue">freq</span>
+            <span style="font-size:.88rem;color:var(--muted);">Frequency delta from the healthy cadence baseline <em>Δf</em></span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span class="badge badge-green">phase</span>
+            <span style="font-size:.88rem;color:var(--muted);">Phase offset in radians from the inertial clock <em>φ</em></span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span class="badge" style="background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.3);">amp</span>
+            <span style="font-size:.88rem;color:var(--muted);">Amplitude excess above E<sub>ref</sub> — the "how wrong" scalar</span>
+          </div>
+        </div>
+        <div class="callout callout-green" style="margin-top:24px;">
+          The shadow clone is the <em>staging environment</em>.
+          Every corrective hypothesis is tested against it before
+          being applied to the live universe — zero downtime, full rollback capability.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE PATCH ──────────────────────────────────────────────────── -->
+<section id="patch">
+  <div class="container">
+    <p class="section-label" style="color:#6ee7b7;">Step 03 — Patch</p>
+    <h2>What the Patch Looks Like</h2>
+    <p class="section-intro">
+      A Giro patch is a minimal, reversible diff applied to the momentum field.
+      It is not a rewrite of history — it is a <strong style="color:var(--text);">fast-forward commit</strong>
+      that restores rhythmic coherence while preserving every prior event.
+    </p>
+
+    <div class="diff-block" style="margin-bottom:32px;">
+      <div class="diff-header">
+        <span>diff --git a/universe/momentum.field b/universe/momentum.field</span>
+        <span class="badge badge-green">PATCH v1</span>
+      </div>
+      <div class="diff-line hunk"><span class="diff-ln">  </span><span class="diff-sign">@@</span><span>-312,14 +312,14 @@ inertia_pool: cadence/baseline</span></div>
+      <div class="diff-line ctx"><span class="diff-ln">312</span><span class="diff-sign"> </span><span>  rhythm_vector: { x: 0.00, y: 0.00, phase: 0.00, amp: 0.03 }  // healthy baseline</span></div>
+      <div class="diff-line ctx"><span class="diff-ln">313</span><span class="diff-sign"> </span><span>  cadence_lock:  true</span></div>
+      <div class="diff-line ctx"><span class="diff-ln">314</span><span class="diff-sign"> </span><span>  erythmia_idx:  0.03</span></div>
+      <div class="diff-line del"><span class="diff-ln">315</span><span class="diff-sign">-</span><span>  phase_offset:  +2.71   // ⚠ drift — erythmia event</span></div>
+      <div class="diff-line del"><span class="diff-ln">316</span><span class="diff-sign">-</span><span>  amplitude:     1.00   // ⚠ full spike at hotspot (312,188)</span></div>
+      <div class="diff-line del"><span class="diff-ln">317</span><span class="diff-sign">-</span><span>  momentum_dir:  INVERTED  // ⚠ vector conflict</span></div>
+      <div class="diff-line del"><span class="diff-ln">318</span><span class="diff-sign">-</span><span>  cadence_lock:  false</span></div>
+      <div class="diff-line add"><span class="diff-ln">315</span><span class="diff-sign">+</span><span>  phase_offset:  +0.00   // ✓ re-synced by Giro PID loop</span></div>
+      <div class="diff-line add"><span class="diff-ln">316</span><span class="diff-sign">+</span><span>  amplitude:     0.04   // ✓ attenuated to baseline ±1σ</span></div>
+      <div class="diff-line add"><span class="diff-ln">317</span><span class="diff-sign">+</span><span>  momentum_dir:  FORWARD  // ✓ vector restored</span></div>
+      <div class="diff-line add"><span class="diff-ln">318</span><span class="diff-sign">+</span><span>  cadence_lock:  true   // ✓ rhythm re-locked to λ₀</span></div>
+      <div class="diff-line ctx"><span class="diff-ln">319</span><span class="diff-sign"> </span><span>  erythmia_idx:  0.03</span></div>
+      <div class="diff-line ctx"><span class="diff-ln">320</span><span class="diff-sign"> </span><span>}</span></div>
+      <div class="diff-line hunk"><span class="diff-ln">  </span><span class="diff-sign">@@</span><span>-0,0 +321 @@ giro_patch_meta</span></div>
+      <div class="diff-line add"><span class="diff-ln">321</span><span class="diff-sign">+</span><span>  patch_author:   "Giro v1.0 · PID[Kp=8, Ki=2, Kd=3]"</span></div>
+      <div class="diff-line add"><span class="diff-ln">322</span><span class="diff-sign">+</span><span>  applied_at:     "edge-of-existence observer node"</span></div>
+      <div class="diff-line add"><span class="diff-ln">323</span><span class="diff-sign">+</span><span>  reversible:     true  // full rollback preserved in shadow pool</span></div>
+      <div class="diff-line add"><span class="diff-ln">324</span><span class="diff-sign">+</span><span>  merge_strategy: "fast-forward — no history rewrite"</span></div>
+    </div>
+
+    <div class="patch-grid">
+      <div class="patch-card" style="--pc-color:#3b82f6;">
+        <div class="pc-icon">🎯</div>
+        <h3>Targeted — not global</h3>
+        <p>Only the identified erythmia coordinates are touched.
+          The rest of the momentum field is left exactly as-is.
+          Surgical precision, zero collateral divergence.</p>
+        <code>scope: localised(312,188) ± σ</code>
+      </div>
+      <div class="patch-card" style="--pc-color:#10b981;">
+        <div class="pc-icon">↩️</div>
+        <h3>Reversible — full rollback</h3>
+        <p>The shadow clone retains the pre-patch state forever.
+          If the merge introduces new instability, <code>git revert</code>
+          returns the universe to the last known-good commit.</p>
+        <code>git revert HEAD~1 --no-edit</code>
+      </div>
+      <div class="patch-card" style="--pc-color:#c084fc;">
+        <div class="pc-icon">⚡</div>
+        <h3>Fast-forward — no rewrite</h3>
+        <p>History is sacred. The patch adds a new commit on top;
+          it does not amend or force-push. The causal chain of events
+          is preserved intact.</p>
+        <code>merge --ff-only giro/shadow-pool</code>
+      </div>
+      <div class="patch-card" style="--pc-color:#f59e0b;">
+        <div class="pc-icon">🔁</div>
+        <h3>Self-healing CI loop</h3>
+        <p>After the merge, Giro's PID loop continues to monitor
+          for regression. If erythmia re-emerges, the regulator
+          authors a new patch automatically.</p>
+        <code>on: erythmia_idx > threshold</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MERGE VISUALISER ───────────────────────────────────────────── -->
+<section id="merge-vis" style="background:var(--surface);">
+  <div class="container">
+    <p class="section-label" style="color:#c4b5fd;">Step 04 — Merge</p>
+    <h2>The Merge: Applying the Patch to Reality</h2>
+    <p class="section-intro">
+      Watch the three-branch lifecycle: <strong>universe/main</strong> (the live repo),
+      <strong>giro/shadow-pool</strong> (the observer fork), and
+      <strong>giro/patch</strong> (the corrective commit) — from fork to fast-forward merge.
+      Click the canvas to trigger a new erythmia event and watch Giro respond.
+    </p>
+
+    <canvas id="merge-canvas"></canvas>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:8px;text-align:center;">
+      Click the canvas to inject an erythmia event · The patch branch auto-generates and merges
+    </p>
+  </div>
+</section>
+
+<!-- ── COSMIC ADMIN LOOP ──────────────────────────────────────────── -->
+<section id="cosmic-loop">
+  <div class="container">
+    <p class="section-label" style="color:#c4b5fd;">The Full Cycle</p>
+    <h2>Cosmic Admin: The Complete Loop</h2>
+    <p class="section-intro">
+      Six operations. One closed loop. Universe left cleaner than found.
+    </p>
+
+    <div class="pipeline" style="margin-top:0;">
+      <div class="pipe-step" style="border-color:rgba(168,85,247,.3);">
+        <div class="step-num" style="background:rgba(168,85,247,.18);color:#c4b5fd;">1</div>
+        <h4>Detect</h4>
+        <p style="font-size:.75rem;">Erythmia vector spotted in the inertia pool</p>
+      </div>
+      <div class="pipe-step" style="border-color:rgba(59,130,246,.3);">
+        <div class="step-num">2</div>
+        <h4>Fork</h4>
+        <p style="font-size:.75rem;">Shadow clone created at edge-of-existence node</p>
+      </div>
+      <div class="pipe-step" style="border-color:rgba(59,130,246,.3);">
+        <div class="step-num">3</div>
+        <h4>Observe</h4>
+        <p style="font-size:.75rem;">Full field read from outside the flow</p>
+      </div>
+      <div class="pipe-step" style="border-color:rgba(239,68,68,.3);">
+        <div class="step-num" style="background:rgba(239,68,68,.18);color:#fca5a5;">4</div>
+        <h4>Regulate</h4>
+        <p style="font-size:.75rem;">PID loop generates corrective waveform</p>
+      </div>
+      <div class="pipe-step" style="border-color:rgba(16,185,129,.3);">
+        <div class="step-num" style="background:rgba(16,185,129,.18);color:#6ee7b7;">5</div>
+        <h4>Patch</h4>
+        <p style="font-size:.75rem;">Minimal diff authored and tested on shadow clone</p>
+      </div>
+      <div class="pipe-step" style="border-color:rgba(16,185,129,.3);">
+        <div class="step-num" style="background:rgba(16,185,129,.18);color:#6ee7b7;">6</div>
+        <h4>Merge</h4>
+        <p style="font-size:.75rem;">Fast-forward commit applied to universe/main</p>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:40px;">
+      <em>You aren't just fixing a heartbeat — you're re-syncing the code of a world's momentum.</em><br/>
+      The Giro doesn't rewrite existence. It <em>commits the correction on top</em>,
+      preserves every prior moment, and hands the repo back to the universe
+      running cleaner than before — one fast-forward at a time.
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
 <footer>
   <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;">
@@ -723,6 +1292,7 @@
     <span style="display:flex;gap:12px;">
       <span class="badge badge-blue">v1.0.0-prototype</span>
       <span class="badge badge-green">Open Research</span>
+      <span class="badge" style="background:rgba(168,85,247,.15);color:#c4b5fd;border:1px solid rgba(168,85,247,.3);">Cosmic Sysadmin Layer</span>
     </span>
   </div>
 </footer>
@@ -1189,6 +1759,376 @@
   ro.observe(canvas);
   resize();
   requestAnimationFrame(loop);
+})();
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   COSMIC SYSTEMS ADMINISTRATION — additional canvases
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Cosmic starfield background canvas ─────────────────────────── */
+(function () {
+  const c = document.getElementById('cosmic-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+  const stars = Array.from({ length: 220 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.4 + 0.3,
+    spd: Math.random() * 0.0003 + 0.00005,
+    phase: Math.random() * Math.PI * 2,
+    col: Math.random() > 0.85 ? '#c4b5fd' : (Math.random() > 0.5 ? '#93c5fd' : '#fff'),
+  }));
+
+  function resize() { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      const alpha = 0.4 + 0.6 * Math.abs(Math.sin(t * s.spd * 200 + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.col.replace(')', `,${alpha})`).replace('rgb', 'rgba').replace('#', 'rgba(')
+        .replace('rgba(', '');
+      // simple approach
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = s.col;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    t += 1;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+/* ── Erythmia waveform canvas ────────────────────────────────────── */
+(function () {
+  const c = document.getElementById('erythmia-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+  // Simulate erythmia: phase drift + amplitude glitch accumulating over time
+  let driftAccum = 0, glitchTimer = 0, glitchActive = false, glitchAmp = 0;
+
+  function resize() {
+    W = c.width = c.clientWidth;
+    H = c.height = c.clientHeight;
+  }
+
+  function draw() {
+    resize();
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#0b0f1a';
+    ctx.fillRect(0, 0, W, H);
+
+    // grid
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += W / 8) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += H / 6) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    ctx.restore();
+
+    // centre baseline
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.setLineDash([4, 8]);
+    ctx.beginPath(); ctx.moveTo(0, H / 2); ctx.lineTo(W, H / 2); ctx.stroke();
+    ctx.restore();
+
+    // update drift
+    driftAccum = (Math.sin(t * 0.008) * 0.8 + Math.sin(t * 0.021) * 0.4) * Math.PI;
+    glitchTimer += 1;
+    if (glitchTimer > 160 && !glitchActive) { glitchActive = true; glitchTimer = 0; }
+    if (glitchActive) { glitchAmp = Math.min(glitchAmp + 0.04, 1); }
+    if (glitchTimer > 90 && glitchActive) { glitchAmp = Math.max(glitchAmp - 0.03, 0); if (glitchAmp <= 0) { glitchActive = false; glitchTimer = 0; } }
+
+    const pts = 280;
+
+    // Healthy reference wave (blue)
+    ctx.beginPath();
+    for (let i = 0; i < pts; i++) {
+      const x = (i / pts) * W;
+      const phase = (i / pts) * Math.PI * 8;
+      const y = H / 2 + Math.sin(phase - t * 0.04) * H * 0.18;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(59,130,246,0.65)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Erythmic (corrupted) wave (red)
+    ctx.beginPath();
+    for (let i = 0; i < pts; i++) {
+      const x = (i / pts) * W;
+      const basePhase = (i / pts) * Math.PI * 8;
+      const phaseDrift = driftAccum * (i / pts);
+      const glitch = glitchActive ? glitchAmp * H * 0.3 * Math.exp(-Math.pow((i / pts - 0.6), 2) * 30) : 0;
+      const y = H / 2
+        + Math.sin(basePhase + phaseDrift - t * 0.04) * H * 0.18
+        + glitch * Math.sin(basePhase * 3);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = `rgba(239,68,68,${0.5 + glitchAmp * 0.45})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Labels
+    ctx.save();
+    ctx.font = 'bold 10px monospace';
+    ctx.fillStyle = 'rgba(59,130,246,0.8)';
+    ctx.fillText('Healthy cadence', 10, 20);
+    ctx.fillStyle = 'rgba(239,68,68,0.8)';
+    ctx.fillText('Erythmia (off-beat)', 10, 36);
+    if (glitchActive && glitchAmp > 0.2) {
+      ctx.fillStyle = '#ef4444';
+      ctx.fillText('⚠ amplitude glitch detected', W / 2 - 90, H - 12);
+    }
+    ctx.restore();
+
+    t += 1;
+    requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(c);
+  resize(); draw();
+})();
+
+/* ── Edge-of-existence orbit canvas ─────────────────────────────── */
+(function () {
+  const c = document.getElementById('edge-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+  const erythmiaVecs = Array.from({ length: 12 }, (_, i) => ({
+    angle: (i / 12) * Math.PI * 2,
+    len: 0.12 + Math.random() * 0.1,
+    speed: (Math.random() - 0.5) * 0.008,
+    bright: Math.random(),
+  }));
+
+  function resize() { W = c.width = c.clientWidth; H = c.height = c.clientHeight; }
+
+  function draw() {
+    resize();
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#06030f';
+    ctx.fillRect(0, 0, W, H);
+
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H) * 0.42;
+
+    // Cauldron core glow
+    const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.55);
+    cg.addColorStop(0, 'rgba(245,158,11,0.18)');
+    cg.addColorStop(0.4, 'rgba(239,68,68,0.10)');
+    cg.addColorStop(1, 'transparent');
+    ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, R * 0.55, 0, Math.PI * 2); ctx.fill();
+
+    // Momentum swirl inside cauldron
+    for (let s = 0; s < 6; s++) {
+      const sr = R * 0.5 * (s + 1) / 7;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(t * 0.006 * (s % 2 === 0 ? 1 : -1));
+      ctx.beginPath(); ctx.ellipse(0, 0, sr, sr * 0.35, s * 0.5, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(245,158,11,${0.08 + s * 0.025})`;
+      ctx.lineWidth = 1; ctx.stroke();
+      ctx.restore();
+    }
+
+    // Cauldron boundary ring
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.55, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(245,158,11,0.25)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Erythmia vectors (red streaks from cauldron)
+    erythmiaVecs.forEach(v => {
+      v.angle += v.speed;
+      const r0 = R * 0.56, r1 = R * (0.56 + v.len);
+      const x0 = cx + r0 * Math.cos(v.angle), y0 = cy + r0 * Math.sin(v.angle);
+      const x1 = cx + r1 * Math.cos(v.angle), y1 = cy + r1 * Math.sin(v.angle);
+      const alpha = 0.3 + 0.7 * v.bright * Math.abs(Math.sin(t * 0.04 + v.angle));
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
+      ctx.strokeStyle = `rgba(239,68,68,${alpha})`; ctx.lineWidth = 1.5; ctx.stroke();
+      // arrowhead
+      const ang = Math.atan2(y1 - y0, x1 - x0);
+      ctx.save();
+      ctx.fillStyle = `rgba(239,68,68,${alpha})`;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 - 7 * Math.cos(ang - 0.4), y1 - 7 * Math.sin(ang - 0.4));
+      ctx.lineTo(x1 - 7 * Math.cos(ang + 0.4), y1 - 7 * Math.sin(ang + 0.4));
+      ctx.closePath(); ctx.fill();
+      ctx.restore();
+    });
+
+    // Observer orbit (Giro sensor at edge)
+    const obsAngle = t * 0.01;
+    const obsX = cx + R * 0.9 * Math.cos(obsAngle);
+    const obsY = cy + R * 0.9 * Math.sin(obsAngle);
+
+    // orbit path
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.9, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(59,130,246,0.2)'; ctx.lineWidth = 1; ctx.setLineDash([4, 8]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Giro sensor node
+    const gg = ctx.createRadialGradient(obsX, obsY, 0, obsX, obsY, 18);
+    gg.addColorStop(0, 'rgba(59,130,246,0.9)'); gg.addColorStop(1, 'transparent');
+    ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(obsX, obsY, 18, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#93c5fd'; ctx.beginPath(); ctx.arc(obsX, obsY, 5, 0, Math.PI * 2); ctx.fill();
+
+    // Sensor scan lines to nearest erythmia vectors
+    erythmiaVecs.slice(0, 3).forEach(v => {
+      const r1x = cx + R * 0.7 * Math.cos(v.angle);
+      const r1y = cy + R * 0.7 * Math.sin(v.angle);
+      ctx.beginPath(); ctx.moveTo(obsX, obsY); ctx.lineTo(r1x, r1y);
+      ctx.strokeStyle = 'rgba(59,130,246,0.15)'; ctx.lineWidth = 1; ctx.setLineDash([2, 6]); ctx.stroke(); ctx.setLineDash([]);
+    });
+
+    // Label
+    ctx.save();
+    ctx.fillStyle = '#93c5fd'; ctx.font = 'bold 10px monospace';
+    ctx.fillText('Giro', obsX + 8, obsY - 8);
+    ctx.fillStyle = 'rgba(245,158,11,0.8)';
+    ctx.fillText('Cauldron', cx - 22, cy + 4);
+    ctx.restore();
+
+    t += 1; requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(c);
+  resize(); draw();
+})();
+
+/* ── Merge-flow canvas ───────────────────────────────────────────── */
+(function () {
+  const c = document.getElementById('merge-canvas');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, t = 0;
+
+  // Branches: main (universe), shadow (fork), patch
+  const LANE = { main: 0.18, shadow: 0.5, patch: 0.82 };
+  const COLORS = { main: '#3b82f6', shadow: '#c084fc', patch: '#10b981' };
+
+  // Commit history scrolling left
+  const SCROLL_SPEED = 0.35; // px per frame
+  let scrollX = 0;
+
+  // Events
+  let events = [
+    { type: 'commit', branch: 'main',   label: 'a3f9c12 Initial',    age: 700 },
+    { type: 'commit', branch: 'main',   label: '7e2d8ab Stable',      age: 520 },
+    { type: 'commit', branch: 'main',   label: 'c5b1f04 ⚠ Erythmia', age: 340, erythmia: true },
+    { type: 'fork',   from: 'main',     to: 'shadow',                  age: 310 },
+    { type: 'commit', branch: 'shadow', label: 'Observe field',        age: 270 },
+    { type: 'commit', branch: 'shadow', label: 'Analyse vectors',      age: 230 },
+    { type: 'fork',   from: 'shadow',   to: 'patch',                   age: 200 },
+    { type: 'commit', branch: 'patch',  label: 'Generate diff',        age: 170 },
+    { type: 'commit', branch: 'patch',  label: 'PID test ✓',           age: 130 },
+    { type: 'merge',  from: 'patch',    to: 'main',                    age: 100 },
+    { type: 'commit', branch: 'main',   label: '✓ Rhythm restored',   age: 80, healed: true },
+  ];
+  let injecting = false, injectTimer = 0;
+
+  c.addEventListener('click', () => {
+    if (injecting) return;
+    injecting = true; injectTimer = 0;
+    // push a new erythmia + heal sequence
+    const base = -120;
+    events.push(
+      { type: 'commit', branch: 'main',   label: '⚠ New Erythmia',  age: base,        erythmia: true },
+      { type: 'fork',   from: 'main',     to: 'shadow',              age: base + 30 },
+      { type: 'commit', branch: 'shadow', label: 'Observe',          age: base + 60 },
+      { type: 'fork',   from: 'shadow',   to: 'patch',               age: base + 80 },
+      { type: 'commit', branch: 'patch',  label: 'Patch authored',   age: base + 100 },
+      { type: 'merge',  from: 'patch',    to: 'main',                age: base + 130 },
+      { type: 'commit', branch: 'main',   label: '✓ Re-synced',      age: base + 150, healed: true }
+    );
+    setTimeout(() => { injecting = false; }, 5000);
+  });
+
+  function resize() { W = c.width = c.clientWidth; H = c.height = c.clientHeight; }
+
+  function xPos(age) { return W * 0.85 - age * 1.8 + scrollX; }
+  function yPos(branch) { return H * LANE[branch]; }
+
+  function drawNode(x, y, color, r, label, erythmia, healed) {
+    if (x < -40 || x > W + 40) return;
+    ctx.save();
+    // glow
+    if (erythmia || healed) {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 20);
+      g.addColorStop(0, erythmia ? 'rgba(239,68,68,0.5)' : 'rgba(16,185,129,0.5)');
+      g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 20, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = erythmia ? '#ef4444' : (healed ? '#10b981' : color);
+    ctx.strokeStyle = '#0b0f1a'; ctx.lineWidth = 2;
+    ctx.fill(); ctx.stroke();
+    if (label) {
+      ctx.fillStyle = erythmia ? '#fca5a5' : (healed ? '#6ee7b7' : '#e2e8f0');
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x, y - 14);
+    }
+    ctx.restore();
+  }
+
+  function draw() {
+    resize();
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#0d1117'; ctx.fillRect(0, 0, W, H);
+
+    // Branch lane lines
+    Object.entries(LANE).forEach(([branch, ly]) => {
+      ctx.beginPath();
+      ctx.moveTo(0, H * ly); ctx.lineTo(W, H * ly);
+      ctx.strokeStyle = COLORS[branch] + '28'; ctx.lineWidth = 1.5; ctx.stroke();
+      // label
+      ctx.save();
+      ctx.fillStyle = COLORS[branch]; ctx.font = 'bold 10px monospace';
+      ctx.fillText(branch === 'main' ? 'universe/main' : branch === 'shadow' ? 'giro/shadow-pool' : 'giro/patch', 8, H * ly - 8);
+      ctx.restore();
+    });
+
+    scrollX += SCROLL_SPEED;
+
+    // Draw connections (fork/merge arcs) first (behind nodes)
+    events.forEach(ev => {
+      if (ev.type === 'fork' || ev.type === 'merge') {
+        const x = xPos(ev.age);
+        const y1 = yPos(ev.from), y2 = yPos(ev.to);
+        if (x < -80 || x > W + 80) return;
+        ctx.beginPath();
+        ctx.moveTo(x, y1);
+        ctx.bezierCurveTo(x + 30, y1, x + 30, y2, x + 60, y2);
+        ctx.strokeStyle = ev.type === 'merge' ? '#10b981' : '#c084fc';
+        ctx.lineWidth = 1.5; ctx.setLineDash([3, 5]); ctx.stroke(); ctx.setLineDash([]);
+      }
+    });
+
+    // Draw commit nodes
+    events.forEach(ev => {
+      if (ev.type === 'commit') {
+        drawNode(xPos(ev.age), yPos(ev.branch), COLORS[ev.branch], 7, ev.label, ev.erythmia, ev.healed);
+      }
+    });
+
+    // Advancing "now" cursor
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 1; ctx.setLineDash([4, 6]);
+    ctx.beginPath(); ctx.moveTo(W * 0.85, 0); ctx.lineTo(W * 0.85, H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.font = '9px monospace';
+    ctx.fillText('NOW', W * 0.85 + 4, 14);
+    ctx.restore();
+
+    t += 1; requestAnimationFrame(draw);
+  }
+
+  new ResizeObserver(resize).observe(c);
+  resize(); draw();
 })();
 </script>
 </body>

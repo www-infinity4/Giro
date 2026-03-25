@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giro — Operational Symptomatic Regulator</title>
+  <style>
+    /* ── Reset & Tokens ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0b0f1a;
+      --surface:   #111827;
+      --border:    #1f2d45;
+      --accent:    #3b82f6;
+      --accent2:   #ef4444;
+      --accent3:   #10b981;
+      --text:      #e2e8f0;
+      --muted:     #94a3b8;
+      --radius:    12px;
+      --ring-1:    rgba(59,130,246,0.25);
+      --ring-2:    rgba(239,68,68,0.25);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Utility ──────────────────────────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .badge-blue  { background: rgba(59,130,246,.15); color: #93c5fd; border: 1px solid rgba(59,130,246,.3); }
+    .badge-red   { background: rgba(239,68,68,.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,.3); }
+    .badge-green { background: rgba(16,185,129,.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 800;
+      line-height: 1.08;
+      background: linear-gradient(135deg, #fff 30%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity .2s, transform .15s;
+      text-decoration: none;
+    }
+    .btn:hover { opacity: .85; transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline  { background: transparent; color: var(--text); border: 1px solid var(--border); }
+
+    /* ── Section ──────────────────────────────────────────────────── */
+    section { padding: 96px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 0.78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 680px;
+      margin-bottom: 56px;
+    }
+
+    /* ── Concept Cards ────────────────────────────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: var(--accent); }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .card p  { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── Two-col layout ───────────────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Diagram ──────────────────────────────────────────────────── */
+    #diagram-canvas {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* ── Prototype / Simulation ───────────────────────────────────── */
+    #prototype { background: var(--surface); }
+
+    .sim-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .sim-wrapper { grid-template-columns: 1fr; } }
+
+    #sim-canvas {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      cursor: crosshair;
+      display: block;
+    }
+
+    .controls {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .control-group input[type=range] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+    .metric-row .val {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .status-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; } 50% { opacity:.3; }
+    }
+
+    /* ── Pipeline ─────────────────────────────────────────────────── */
+    .pipeline {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .pipe-step {
+      flex: 1 1 160px;
+      min-width: 140px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      position: relative;
+    }
+    .pipe-step + .pipe-step {
+      margin-left: 12px;
+    }
+    .pipe-step + .pipe-step::before {
+      content: '→';
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .pipe-step .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(59,130,246,.18);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .pipe-step h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; }
+    .pipe-step p  { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── Spec Table ───────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+    th { color: var(--muted); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: .06em; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 0.83rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ── Scrollbar ────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="container hero-content">
+    <p class="hero-eyebrow">Biomechanical Inertial Regulation</p>
+    <h1>Giro<br/>Symptomatic Regulator</h1>
+    <p class="hero-sub">
+      An operational framework that harnesses gyroscopic inertia forces to
+      continuously sense, map, and regulate erythematic tissue response —
+      closing the feedback loop between vascular inflammation and corrective
+      mechanical stimulation.
+    </p>
+    <div class="hero-cta">
+      <a href="#prototype" class="btn btn-primary">▶ Launch Prototype</a>
+      <a href="#explanation" class="btn btn-outline">Read Explanation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPLANATION ───────────────────────────────────────────────── -->
+<section id="explanation">
+  <div class="container">
+    <p class="section-label">Core Concept</p>
+    <h2>What is Giro?</h2>
+    <p class="section-intro">
+      Giro fuses two physical disciplines — gyroscopic dynamics and
+      cutaneous vascular regulation — into a single closed-loop control
+      system for precision biomedical applications.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(59,130,246,.12);">🌀</div>
+        <h3>Gyroscopic Inertia Pool</h3>
+        <p>
+          A spinning rotor maintains angular momentum proportional to
+          its angular velocity. The "pool of inertia forces" describes
+          the conservation of this momentum within the mechanical frame,
+          providing a stable reference for detecting perturbations.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(239,68,68,.12);">🔴</div>
+        <h3>Erythema as a Signal Source</h3>
+        <p>
+          Erythema — skin redness caused by capillary dilation — is
+          "specially sourced" via optical or infrared sensors to produce
+          a real-time vascular-activity signal. Intensity and spatial
+          distribution encode the severity and location of inflammation.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(16,185,129,.12);">⚡</div>
+        <h3>Symptomatic Regulation</h3>
+        <p>
+          The regulator compares the erythema signal against a setpoint
+          and drives a corrective actuator — mechanical vibration, thermal
+          or pneumatic stimulus — to bring tissue back within healthy
+          bounds, completing the closed-loop feedback cycle.
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(245,158,11,.12);">📡</div>
+        <h3>Operational Mode</h3>
+        <p>
+          "Operational" emphasises continuous, real-time activity. The
+          system samples the erythema field at high frequency, updates
+          the inertial reference, and issues corrective commands without
+          human intervention.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────────────── -->
+<section id="how-it-works">
+  <div class="container">
+    <p class="section-label">Mechanism</p>
+    <h2>How Giro Works</h2>
+    <p class="section-intro">
+      Five interdependent subsystems cooperate to deliver
+      continuous regulation.
+    </p>
+
+    <div class="two-col">
+      <div>
+        <canvas id="diagram-canvas"></canvas>
+      </div>
+      <div>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div>
+            <span class="badge badge-blue" style="margin-bottom:8px;">01</span>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:6px;">Optical Erythema Sensing</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">
+              A spectrophotometric or infrared array captures the spatial
+              heat-map of surface redness at up to 60 Hz, producing a
+              continuous intensity field <em>E(x, y, t)</em>.
+            </p>
+          </div>
+          <div>
+            <span class="badge badge-red" style="margin-bottom:8px;">02</span>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:6px;">Gyroscopic Reference Frame</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">
+              A MEMS gyroscope trio provides angular-velocity vectors
+              (<em>ω<sub>x</sub>, ω<sub>y</sub>, ω<sub>z</sub></em>), 
+              anchoring the erythema map to body-fixed coordinates despite
+              patient movement.
+            </p>
+          </div>
+          <div>
+            <span class="badge badge-green" style="margin-bottom:8px;">03</span>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:6px;">PID Regulation Loop</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">
+              A proportional-integral-derivative controller computes an error
+              signal <em>ε = E − E<sub>ref</sub></em> and outputs a
+              corrective drive waveform to the haptic/thermal actuator.
+            </p>
+          </div>
+          <div>
+            <span class="badge badge-blue" style="margin-bottom:8px;">04</span>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:6px;">Actuator Response</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">
+              Targeted micro-vibration, localised cooling, or pneumatic
+              compression reduces capillary pressure and erythema intensity
+              at precisely the identified site.
+            </p>
+          </div>
+          <div>
+            <span class="badge badge-red" style="margin-bottom:8px;">05</span>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:6px;">Adaptive Learning</h3>
+            <p style="font-size:0.88rem;color:var(--muted);">
+              Session data trains a lightweight model that personalises
+              setpoints and gain parameters over successive treatments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PIPELINE ───────────────────────────────────────────────────── -->
+<section id="pipeline">
+  <div class="container">
+    <p class="section-label">Signal Pipeline</p>
+    <h2>Data Flow</h2>
+    <p class="section-intro">
+      Every regulation cycle traverses the following stages in under 17 ms.
+    </p>
+
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="step-num">1</div>
+        <h4>Acquisition</h4>
+        <p>IR / spectro sensor captures erythema frame <em>E(x,y)</em></p>
+      </div>
+      <div class="pipe-step">
+        <div class="step-num">2</div>
+        <h4>Stabilisation</h4>
+        <p>Gyro data corrects for rigid-body motion</p>
+      </div>
+      <div class="pipe-step">
+        <div class="step-num">3</div>
+        <h4>Feature Extraction</h4>
+        <p>Peak intensity, centroid, and spread computed</p>
+      </div>
+      <div class="pipe-step">
+        <div class="step-num">4</div>
+        <h4>PID Control</h4>
+        <p>Error → corrective drive waveform</p>
+      </div>
+      <div class="pipe-step">
+        <div class="step-num">5</div>
+        <h4>Actuation</h4>
+        <p>Haptic / thermal / pneumatic stimulus applied</p>
+      </div>
+      <div class="pipe-step">
+        <div class="step-num">6</div>
+        <h4>Logging</h4>
+        <p>Session data stored for adaptive tuning</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTERACTIVE PROTOTYPE ──────────────────────────────────────── -->
+<section id="prototype">
+  <div class="container">
+    <p class="section-label">Interactive Prototype</p>
+    <h2>Live Regulation Simulation</h2>
+    <p class="section-intro">
+      Click anywhere on the canvas to inject an erythema hotspot.
+      The Giro regulator will automatically detect and suppress it.
+      Adjust the controls to explore different operating conditions.
+    </p>
+
+    <div class="sim-wrapper">
+      <canvas id="sim-canvas"></canvas>
+
+      <div class="controls">
+        <div class="status-row">
+          <span class="status-dot"></span>
+          Regulator active
+        </div>
+
+        <div class="control-group">
+          <label>Gyro Sensitivity</label>
+          <input type="range" id="ctrl-gyro" min="1" max="10" value="5" />
+          <div class="metric-row">
+            <span>ω gain</span>
+            <span class="val" id="val-gyro">5.0</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>PID — Proportional (K<sub>p</sub>)</label>
+          <input type="range" id="ctrl-kp" min="1" max="20" value="8" />
+          <div class="metric-row">
+            <span>K<sub>p</sub></span>
+            <span class="val" id="val-kp">8</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>PID — Integral (K<sub>i</sub>)</label>
+          <input type="range" id="ctrl-ki" min="0" max="10" value="2" />
+          <div class="metric-row">
+            <span>K<sub>i</sub></span>
+            <span class="val" id="val-ki">2</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>PID — Derivative (K<sub>d</sub>)</label>
+          <input type="range" id="ctrl-kd" min="0" max="10" value="3" />
+          <div class="metric-row">
+            <span>K<sub>d</sub></span>
+            <span class="val" id="val-kd">3</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>Erythema Threshold</label>
+          <input type="range" id="ctrl-thresh" min="10" max="90" value="40" />
+          <div class="metric-row">
+            <span>E<sub>ref</sub></span>
+            <span class="val" id="val-thresh">40</span>%
+          </div>
+        </div>
+
+        <hr style="border-color:var(--border);" />
+
+        <div class="metric-row">
+          <span>Peak intensity</span>
+          <span class="val" id="met-peak">0.00</span>
+        </div>
+        <div class="metric-row">
+          <span>Active hotspots</span>
+          <span class="val" id="met-spots">0</span>
+        </div>
+        <div class="metric-row">
+          <span>Regulator output</span>
+          <span class="val" id="met-output">0.00</span>
+        </div>
+        <div class="metric-row">
+          <span>Angular momentum</span>
+          <span class="val" id="met-gyro">0.00</span> L
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SPECIFICATIONS ─────────────────────────────────────────────── -->
+<section id="specs">
+  <div class="container">
+    <p class="section-label">Technical Specifications</p>
+    <h2>System Parameters</h2>
+    <p class="section-intro">Reference values for a clinical-grade Giro device.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Symbol</th>
+          <th>Typical Value</th>
+          <th>Unit</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sampling frequency</td>
+          <td><em>f<sub>s</sub></em></td>
+          <td>60</td>
+          <td>Hz</td>
+          <td>Nyquist sufficient for erythema dynamics</td>
+        </tr>
+        <tr>
+          <td>Gyroscope full-scale</td>
+          <td>ω<sub>max</sub></td>
+          <td>±2000</td>
+          <td>°/s</td>
+          <td>MEMS triple-axis</td>
+        </tr>
+        <tr>
+          <td>Spatial resolution</td>
+          <td>Δx</td>
+          <td>0.5</td>
+          <td>mm/px</td>
+          <td>IR sensor at 15 cm standoff</td>
+        </tr>
+        <tr>
+          <td>Control loop latency</td>
+          <td>τ<sub>loop</sub></td>
+          <td>&lt;17</td>
+          <td>ms</td>
+          <td>End-to-end pipeline (one cycle)</td>
+        </tr>
+        <tr>
+          <td>Proportional gain</td>
+          <td>K<sub>p</sub></td>
+          <td>8</td>
+          <td>—</td>
+          <td>Tunable 1–20</td>
+        </tr>
+        <tr>
+          <td>Integral gain</td>
+          <td>K<sub>i</sub></td>
+          <td>2</td>
+          <td>—</td>
+          <td>Anti-windup clamp ±100</td>
+        </tr>
+        <tr>
+          <td>Derivative gain</td>
+          <td>K<sub>d</sub></td>
+          <td>3</td>
+          <td>—</td>
+          <td>Low-pass filtered (α=0.1)</td>
+        </tr>
+        <tr>
+          <td>Erythema setpoint</td>
+          <td>E<sub>ref</sub></td>
+          <td>40</td>
+          <td>% FSR</td>
+          <td>Adjustable per patient protocol</td>
+        </tr>
+        <tr>
+          <td>Actuator peak force</td>
+          <td>F<sub>max</sub></td>
+          <td>2</td>
+          <td>N</td>
+          <td>Haptic transducer; localised stimulus</td>
+        </tr>
+        <tr>
+          <td>Power consumption</td>
+          <td>P</td>
+          <td>650</td>
+          <td>mW</td>
+          <td>Portable battery operation ≥8 h</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;">
+    <span>Giro — Operational Symptomatic Regulator &copy; 2026</span>
+    <span style="display:flex;gap:12px;">
+      <span class="badge badge-blue">v1.0.0-prototype</span>
+      <span class="badge badge-green">Open Research</span>
+    </span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Hero Canvas — animated gyroscope rings ───────────────────────── */
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, raf;
+  let t = 0;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W * 0.72, cy = H * 0.5;
+    const maxR = Math.min(W, H) * 0.38;
+
+    // Outer glow
+    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 1.2);
+    grd.addColorStop(0, 'rgba(59,130,246,0.08)');
+    grd.addColorStop(1, 'transparent');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(cx, cy, maxR * 1.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw three gyroscope rings
+    const rings = [
+      { r: maxR,       tilt: Math.PI / 6,  phase: 0,              color: 'rgba(59,130,246,0.55)' },
+      { r: maxR * 0.7, tilt: Math.PI / 3,  phase: Math.PI * 2/3,  color: 'rgba(239,68,68,0.50)'  },
+      { r: maxR * 0.4, tilt: Math.PI / 2,  phase: Math.PI * 4/3,  color: 'rgba(16,185,129,0.55)' },
+    ];
+
+    rings.forEach(ring => {
+      const angle = t * 0.6 + ring.phase;
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(ring.tilt * 0.5);
+
+      // Ellipse simulating ring in 3-D
+      const rx = ring.r;
+      const ry = ring.r * Math.abs(Math.sin(t * 0.4 + ring.phase)) * 0.55 + ring.r * 0.18;
+
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rx, ry, angle, 0, Math.PI * 2);
+      ctx.strokeStyle = ring.color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Dot on ring
+      const dotX = rx * Math.cos(angle);
+      const dotY = ry * Math.sin(angle);
+      ctx.beginPath();
+      ctx.arc(dotX, dotY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = ring.color;
+      ctx.fill();
+
+      ctx.restore();
+    });
+
+    // Erythema heat-patch — pulsing blob
+    const er = { x: W * 0.28, y: H * 0.55 };
+    const eSize = 60 + 20 * Math.sin(t * 1.8);
+    const ePulse = ctx.createRadialGradient(er.x, er.y, 0, er.x, er.y, eSize);
+    ePulse.addColorStop(0, 'rgba(239,68,68,0.45)');
+    ePulse.addColorStop(0.5, 'rgba(239,100,68,0.2)');
+    ePulse.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(er.x, er.y, eSize, 0, Math.PI * 2);
+    ctx.fillStyle = ePulse;
+    ctx.fill();
+
+    // Arrow from erythema to rings indicating feedback
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 8]);
+    ctx.beginPath();
+    ctx.moveTo(er.x + 60, er.y);
+    ctx.lineTo(cx - maxR * 0.9, cy);
+    ctx.stroke();
+    ctx.restore();
+
+    t += 0.016;
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+  draw();
+})();
+
+
+/* ── Diagram Canvas — block diagram ─────────────────────────────── */
+(function () {
+  const canvas = document.getElementById('diagram-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    const w = canvas.clientWidth;
+    canvas.width  = w;
+    canvas.height = w;
+    render();
+  }
+
+  function box(x, y, w, h, label, sub, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    const r = 8;
+    ctx.beginPath();
+    ctx.roundRect(x, y, w, h, r);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 12px Segoe UI,system-ui,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, x + w / 2, y + h / 2 - (sub ? 6 : 0));
+    if (sub) {
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.font = '10px Segoe UI,system-ui,sans-serif';
+      ctx.fillText(sub, x + w / 2, y + h / 2 + 11);
+    }
+    ctx.restore();
+  }
+
+  function arrow(x1, y1, x2, y2) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // arrowhead
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const len = 7;
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - len * Math.cos(angle - 0.4), y2 - len * Math.sin(angle - 0.4));
+    ctx.lineTo(x2 - len * Math.cos(angle + 0.4), y2 - len * Math.sin(angle + 0.4));
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function render() {
+    const S = canvas.width;
+    ctx.clearRect(0, 0, S, S);
+
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(0, 0, S, S);
+
+    const bw = S * 0.28, bh = 44;
+    const col1 = S * 0.06, col2 = S * 0.38, col3 = S * 0.66;
+    const rows = [S*0.12, S*0.3, S*0.48, S*0.66, S*0.82];
+
+    // nodes
+    box(col1, rows[0], bw, bh, 'IR Sensor',    'E(x,y,t)',    'rgba(239,68,68,0.55)');
+    box(col2, rows[0], bw, bh, 'Gyroscope',    'ω(x,y,z)',    'rgba(59,130,246,0.55)');
+    box(col3, rows[0], bw, bh, 'Stabiliser',   'Motion corr.','rgba(59,130,246,0.35)');
+    box(col2, rows[2], bw, bh, 'PID',          'Kp Ki Kd',    'rgba(16,185,129,0.55)');
+    box(col1, rows[2], bw, bh, 'Feature Ext.', 'Peak/centroid','rgba(245,158,11,0.5)');
+    box(col3, rows[2], bw, bh, 'Actuator',     'Haptic/thermal','rgba(168,85,247,0.5)');
+    box(col2, rows[4], bw, bh, 'Adaptive ML',  'Session data', 'rgba(59,130,246,0.35)');
+
+    // Setpoint reference
+    ctx.save();
+    ctx.strokeStyle = 'rgba(16,185,129,0.5)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 5]);
+    ctx.beginPath();
+    ctx.moveTo(col2 + bw / 2, rows[2] - 28);
+    ctx.lineTo(col2 + bw / 2, rows[2]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(16,185,129,0.6)';
+    ctx.font = '9px Segoe UI,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('E_ref', col2 + bw / 2, rows[2] - 34);
+    ctx.restore();
+
+    // arrows
+    const cX = (c, w) => c + w / 2;
+    const bY = (r) => r + bh;
+    const tY = (r) => r;
+
+    arrow(cX(col1, bw), bY(rows[0]), cX(col1, bw), tY(rows[2]));       // sensor → feat
+    arrow(cX(col2, bw), bY(rows[0]), cX(col3, bw), tY(rows[0]));       // gyro → stab
+    arrow(cX(col3, bw), bY(rows[0]), cX(col3, bw), tY(rows[2]));       // stab → actuator
+    arrow(cX(col1, bw), rows[2] + bh/2, cX(col2, bw), rows[2] + bh/2);// feat → PID
+    arrow(cX(col2, bw), rows[2] + bh/2, cX(col3, bw), rows[2] + bh/2);// PID → actuator
+    arrow(cX(col2, bw), bY(rows[2]), cX(col2, bw), tY(rows[4]));       // PID → ML
+    // feedback arrow (actuator → sensor via curve)
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath();
+    ctx.moveTo(cX(col3, bw), rows[2] + bh);
+    ctx.quadraticCurveTo(S * 0.98, S * 0.7, S * 0.98, rows[0] + bh / 2);
+    ctx.quadraticCurveTo(S * 0.98, rows[0] - 10, cX(col1, bw) + bw, rows[0] + bh / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas);
+  resize();
+})();
+
+
+/* ── Simulation ──────────────────────────────────────────────────── */
+(function () {
+  const canvas  = document.getElementById('sim-canvas');
+  const ctx     = canvas.getContext('2d');
+
+  // Controls
+  const sliders = {
+    gyro:   document.getElementById('ctrl-gyro'),
+    kp:     document.getElementById('ctrl-kp'),
+    ki:     document.getElementById('ctrl-ki'),
+    kd:     document.getElementById('ctrl-kd'),
+    thresh: document.getElementById('ctrl-thresh'),
+  };
+  const vals = {
+    gyro:   document.getElementById('val-gyro'),
+    kp:     document.getElementById('val-kp'),
+    ki:     document.getElementById('val-ki'),
+    kd:     document.getElementById('val-kd'),
+    thresh: document.getElementById('val-thresh'),
+  };
+  const metrics = {
+    peak:   document.getElementById('met-peak'),
+    spots:  document.getElementById('met-spots'),
+    output: document.getElementById('met-output'),
+    gyro:   document.getElementById('met-gyro'),
+  };
+
+  Object.keys(sliders).forEach(k => {
+    sliders[k].addEventListener('input', () => {
+      vals[k].textContent = parseFloat(sliders[k].value).toFixed(
+        k === 'gyro' ? 1 : 0
+      );
+    });
+  });
+
+  // State
+  let W, H;
+  let hotspots = [];
+  let gyroAngle = 0;
+  let angularMomentum = 1.0;
+  let pidIntegral = 0;
+  let pidPrevError = 0;
+
+  class Hotspot {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.intensity = 1.0;    // 0..1
+      this.radius    = 30 + Math.random() * 20;
+      this.age       = 0;
+      this.drift     = { x: (Math.random() - 0.5) * 0.3, y: (Math.random() - 0.5) * 0.3 };
+    }
+  }
+
+  function resize() {
+    W = canvas.width  = canvas.clientWidth;
+    H = canvas.height = canvas.clientHeight;
+  }
+
+  canvas.addEventListener('click', e => {
+    const r = canvas.getBoundingClientRect();
+    hotspots.push(new Hotspot(e.clientX - r.left, e.clientY - r.top));
+  });
+
+  // Touch support
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const r = canvas.getBoundingClientRect();
+    Array.from(e.changedTouches).forEach(t => {
+      hotspots.push(new Hotspot(t.clientX - r.left, t.clientY - r.top));
+    });
+  }, { passive: false });
+
+  function getParams() {
+    return {
+      gyroGain: parseFloat(sliders.gyro.value),
+      kp:       parseFloat(sliders.kp.value),
+      ki:       parseFloat(sliders.ki.value),
+      kd:       parseFloat(sliders.kd.value),
+      thresh:   parseFloat(sliders.thresh.value) / 100,
+    };
+  }
+
+  let lastTime = 0;
+  function loop(ts) {
+    const dt = Math.min((ts - lastTime) / 1000, 0.05);
+    lastTime = ts;
+
+    const p = getParams();
+
+    resize();
+    ctx.clearRect(0, 0, W, H);
+
+    // Background skin texture
+    const skinGrd = ctx.createLinearGradient(0, 0, W, H);
+    skinGrd.addColorStop(0, '#1a0d08');
+    skinGrd.addColorStop(1, '#120a06');
+    ctx.fillStyle = skinGrd;
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    for (let gx = 0; gx < W; gx += 40) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke(); }
+    for (let gy = 0; gy < H; gy += 40) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
+    ctx.restore();
+
+    // Update gyro dynamics
+    gyroAngle += p.gyroGain * 0.02 * dt * 60;
+    angularMomentum = 0.97 * angularMomentum + 0.03 * p.gyroGain;
+
+    // Compute aggregate erythema intensity
+    let totalIntensity = 0;
+    hotspots = hotspots.filter(h => h.intensity > 0.01);
+
+    hotspots.forEach(h => {
+      h.age += dt;
+      h.x += h.drift.x;
+      h.y += h.drift.y;
+
+      // Draw erythema blob
+      const grd = ctx.createRadialGradient(h.x, h.y, 0, h.x, h.y, h.radius * 2);
+      grd.addColorStop(0,   `rgba(239,68,68,${h.intensity * 0.9})`);
+      grd.addColorStop(0.3, `rgba(220,100,60,${h.intensity * 0.55})`);
+      grd.addColorStop(0.7, `rgba(200,80,50,${h.intensity * 0.2})`);
+      grd.addColorStop(1,   'transparent');
+      ctx.beginPath();
+      ctx.arc(h.x, h.y, h.radius * 2, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // Intensity label
+      if (h.intensity > 0.15) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '10px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText((h.intensity * 100).toFixed(0) + '%', h.x, h.y + 4);
+        ctx.restore();
+      }
+
+      totalIntensity = Math.max(totalIntensity, h.intensity);
+    });
+
+    // PID loop
+    const error    = totalIntensity - p.thresh;
+    pidIntegral    = Math.max(-10, Math.min(10, pidIntegral + error * dt));
+    const deriv    = dt > 0 ? (error - pidPrevError) / dt : 0;
+    pidPrevError   = error;
+    const pidOut   = Math.max(0, p.kp * error + p.ki * pidIntegral + p.kd * deriv);
+
+    // Attenuate hotspots based on PID output
+    const attenRate = pidOut * 0.12 * dt * 60;
+    hotspots.forEach(h => {
+      h.intensity -= attenRate / (hotspots.length || 1);
+    });
+
+    // Actuator rings emanating from hotspot centres
+    if (pidOut > 0.5) {
+      hotspots.forEach(h => {
+        const ringR = (h.age % 1.2) / 1.2 * 80;
+        const ringAlpha = Math.max(0, 0.5 - ringR / 80) * (pidOut / 10);
+        ctx.save();
+        ctx.strokeStyle = `rgba(16,185,129,${ringAlpha})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(h.x, h.y, ringR, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    // Gyroscope overlay (top-right corner)
+    const gx = W - 70, gy = 70, gr = 50;
+    ctx.save();
+    ctx.translate(gx, gy);
+
+    // outer ring
+    ctx.strokeStyle = 'rgba(59,130,246,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(0, 0, gr, 0, Math.PI * 2); ctx.stroke();
+
+    // inner spinning ring (ellipse)
+    ctx.rotate(gyroAngle);
+    ctx.strokeStyle = 'rgba(59,130,246,0.75)';
+    ctx.beginPath(); ctx.ellipse(0, 0, gr * 0.9, gr * 0.25, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.rotate(-gyroAngle);
+
+    // second spinning ring
+    ctx.rotate(gyroAngle * 0.6 + 1);
+    ctx.strokeStyle = 'rgba(239,68,68,0.55)';
+    ctx.beginPath(); ctx.ellipse(0, 0, gr * 0.9, gr * 0.25, Math.PI/2, 0, Math.PI * 2); ctx.stroke();
+    ctx.rotate(-(gyroAngle * 0.6 + 1));
+
+    // centre dot
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    // Threshold line
+    const threshY = H - H * p.thresh - 20;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(16,185,129,0.35)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([6, 8]);
+    ctx.beginPath(); ctx.moveTo(0, threshY); ctx.lineTo(W, threshY); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(16,185,129,0.6)';
+    ctx.font = '10px monospace';
+    ctx.fillText('E_ref = ' + (p.thresh * 100).toFixed(0) + '%', 8, threshY - 5);
+    ctx.restore();
+
+    // Status overlay (top left)
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.roundRect(8, 8, 160, 28, 6);
+    ctx.fill();
+    ctx.fillStyle = pidOut > 0.5 ? '#ef4444' : '#10b981';
+    ctx.font = 'bold 11px monospace';
+    ctx.fillText(
+      pidOut > 0.5 ? '● REGULATING' : '● STANDBY',
+      18, 27
+    );
+    ctx.restore();
+
+    // Update metrics
+    metrics.peak.textContent   = totalIntensity.toFixed(2);
+    metrics.spots.textContent  = hotspots.length;
+    metrics.output.textContent = pidOut.toFixed(2);
+    metrics.gyro.textContent   = angularMomentum.toFixed(2);
+
+    requestAnimationFrame(loop);
+  }
+
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas);
+  resize();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
